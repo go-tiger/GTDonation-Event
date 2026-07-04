@@ -1,14 +1,12 @@
 package dev.gotiger.gTDonationEvent;
 
-import dev.gotiger.gTDonationEvent.action.BreadAction;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
-import dev.gotiger.gTDonationEvent.action.SteakAction;
+import dev.gotiger.gTDonationEvent.action.food.BreadAction;
+import dev.gotiger.gTDonationEvent.action.food.SteakAction;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
-import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -17,6 +15,7 @@ public final class GTDonationEvent extends JavaPlugin {
 
     private DonationConfig donationConfig;
     private DonationActionRegistry actionRegistry;
+    private DonationScriptAPI scriptAPI;
     private boolean scriptMode;
 
     @Override
@@ -36,6 +35,8 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new BreadAction());
         actionRegistry.register(new SteakAction());
 
+        scriptAPI = new DonationScriptAPI(actionRegistry);
+
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
                 this
@@ -54,29 +55,7 @@ public final class GTDonationEvent extends JavaPlugin {
         return actionRegistry;
     }
 
-    public void getBread(Player player, int amount) {
-        getBread(player, amount, DonationTarget.PLAYER);
-    }
-
-    public void getBread(Player player, int amount, DonationTarget target) {
-        BreadAction bread = (BreadAction) actionRegistry.get("BREAD")
-                .orElseThrow(() -> new IllegalArgumentException("BREAD action is not registered"));
-
-        for (Player recipient : target.resolve(player)) {
-            bread.execute(recipient, amount);
-        }
-    }
-
-    public void getSteak(Player player, int amount) {
-        getSteak(player, amount, DonationTarget.PLAYER);
-    }
-
-    public void getSteak(Player player, int amount, DonationTarget target) {
-        SteakAction steak = (SteakAction) actionRegistry.get("STEAK")
-                .orElseThrow(() -> new IllegalArgumentException("STEAK action is not registered"));
-
-        for (Player recipient : target.resolve(player)) {
-            steak.execute(recipient, amount);
-        }
+    public DonationScriptAPI getScriptAPI() {
+        return scriptAPI;
     }
 }

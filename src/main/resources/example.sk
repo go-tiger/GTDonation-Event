@@ -13,11 +13,11 @@ import:
     org.bukkit.Bukkit
 
 on DonationEvent:
-    set {_plugin} to Bukkit.getPluginManager().getPlugin("GTDonationEvent")
+    set {_api} to Bukkit.getPluginManager().getPlugin("GTDonationEvent").getScriptAPI()
 
     set {_player} to event.getPlayer()
     set {_donorName} to event.getDonorName()
     set {_amount} to event.getAmount()
 
     if {_amount} = 1000:
-        {_plugin}.getBread({_player}, 1, DonationTarget.PLAYER)
+        {_api}.getBread({_player}, 1, DonationTarget.PLAYER)

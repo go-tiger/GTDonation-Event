@@ -1,5 +1,6 @@
-package dev.gotiger.gTDonationEvent.action;
+package dev.gotiger.gTDonationEvent.action.food;
 
+import dev.gotiger.gTDonationEvent.action.DonationAction;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
