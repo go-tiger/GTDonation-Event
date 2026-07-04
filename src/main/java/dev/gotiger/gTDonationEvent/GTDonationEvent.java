@@ -3,6 +3,7 @@ package dev.gotiger.gTDonationEvent;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
+import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +18,8 @@ public final class GTDonationEvent extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
+        new ConfigMigrator().migrate(this, getConfig());
 
         scriptMode = getConfig().getBoolean("script-mode", true);
 
