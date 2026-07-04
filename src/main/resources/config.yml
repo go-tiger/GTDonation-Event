@@ -9,6 +9,35 @@ exp-bottle:
   min-count: 3
   max-count: 8
 
+random-buff:
+  duration-seconds: 60
+  amplifier: 1
+  # 서버에 등록된 모든 포션 효과 중 아래 목록에 없는 것만 랜덤 지급 후보가 됩니다.
+  exclude-effects:
+    - POISON
+    - WITHER
+    - BLINDNESS
+    - NAUSEA
+    - CONFUSION
+    - HUNGER
+    - WEAKNESS
+    - SLOWNESS
+    - SLOW
+    - MINING_FATIGUE
+    - SLOW_DIGGING
+    - LEVITATION
+    - UNLUCK
+    - GLOWING
+    - BAD_OMEN
+    - DARKNESS
+    - INFESTED
+    - OOZING
+    - RAID_OMEN
+    - TRIAL_OMEN
+    - WIND_CHARGED
+    - INSTANT_DAMAGE
+    - HARM
+
 events:
   1000:
     action: BREAD

@@ -1,12 +1,15 @@
 package dev.gotiger.gTDonationEvent;
 
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
+import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
+import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 public class DonationScriptAPI {
 
@@ -50,6 +53,23 @@ public class DonationScriptAPI {
 
     public void getSteak(Player player, int amount, DonationTarget target) {
         run("STEAK", player, amount, target);
+    }
+
+    public void getRandomBuff(Player player, String donorName) {
+        getRandomBuff(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getRandomBuff(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("BUFF").ifPresent(action -> {
+            RandomBuffAction randomBuffAction = (RandomBuffAction) action;
+            for (Player recipient : target.resolve(player)) {
+                PotionEffectType effectType = randomBuffAction.applyBuff(recipient);
+                if (effectType == null) {
+                    continue;
+                }
+                BuffMessageSender.broadcastBuffMessage(recipient, donorName, effectType);
+            }
+        });
     }
 
     public void getExpBottle(Player player, String donorName) {

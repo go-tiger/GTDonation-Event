@@ -10,3 +10,9 @@ depend: [ GTDonationCore ]
 
 authors: [ go-tiger ]
 website: gotiger.dev
+
+commands:
+  gtdonationevent:
+    description: GTDonationEvent 디버그 명령어
+    permission: gtdonationevent.debug
+    aliases: [ gtde ]

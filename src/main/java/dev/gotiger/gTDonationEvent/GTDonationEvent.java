@@ -1,11 +1,13 @@
 package dev.gotiger.gTDonationEvent;
 
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
+import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
+import dev.gotiger.gTDonationEvent.command.DebugCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
@@ -33,6 +35,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new BreadAction());
         actionRegistry.register(new SteakAction());
         actionRegistry.register(new ExpBottleAction(this));
+        actionRegistry.register(new RandomBuffAction(this));
 
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);
@@ -44,6 +47,8 @@ public final class GTDonationEvent extends JavaPlugin {
         );
         getServer().getPluginManager().registerEvents(chatMiningManager, this);
         getServer().getPluginManager().registerEvents(chatShootingManager, this);
+
+        getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
     }
 
     public boolean isScriptMode() {
