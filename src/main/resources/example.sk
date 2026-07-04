@@ -36,3 +36,7 @@ on DonationEvent:
     if {_amount} = 5000:
         # 30초 동안 단어 조건 없이 채팅이 올라올 때마다 즉시 채굴 발동
         {_api}.getChatMining({_player}, 30, null, null, 2, DonationTarget.PLAYER)
+
+    if {_amount} = 6000:
+        # 30초 동안 채팅이 올라올 때마다 화살 발사 (config.yml의 chat-shooting.fireball-chance 확률로 화염구 발사)
+        {_api}.getChatShooting({_player}, 30, DonationTarget.PLAYER)

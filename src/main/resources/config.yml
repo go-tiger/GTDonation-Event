@@ -2,6 +2,9 @@ config-version: 1.0
 
 script-mode: true
 
+chat-shooting:
+  fireball-chance: 0.2
+
 events:
   1000:
     action: BREAD

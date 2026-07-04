@@ -2,6 +2,7 @@ package dev.gotiger.gTDonationEvent;
 
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
+import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import org.bukkit.entity.Player;
 
@@ -9,10 +10,12 @@ public class DonationScriptAPI {
 
     private final DonationActionRegistry actionRegistry;
     private final ChatMiningManager chatMiningManager;
+    private final ChatShootingManager chatShootingManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
+        this.chatShootingManager = chatShootingManager;
     }
 
     public void getChatMining(Player player, int seconds, String word1, String word2, int radius) {
@@ -21,6 +24,14 @@ public class DonationScriptAPI {
 
     public void getChatMining(Player player, int seconds, String word1, String word2, int radius, DonationTarget target) {
         chatMiningManager.start(player, seconds, word1, word2, radius, target);
+    }
+
+    public void getChatShooting(Player player, int seconds) {
+        chatShootingManager.start(player, seconds, DonationTarget.PLAYER);
+    }
+
+    public void getChatShooting(Player player, int seconds, DonationTarget target) {
+        chatShootingManager.start(player, seconds, target);
     }
 
     public void getBread(Player player, int amount) {
