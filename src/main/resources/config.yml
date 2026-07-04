@@ -1,0 +1,10 @@
+events:
+  1000:
+    action: BREAD
+    target: player
+  5000:
+    action: BUFF
+    target: random
+  10000:
+    action: DEBUFF
+    target: all
