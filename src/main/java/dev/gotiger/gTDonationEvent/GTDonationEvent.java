@@ -2,6 +2,7 @@ package dev.gotiger.gTDonationEvent;
 
 import dev.gotiger.gTDonationEvent.action.BreadAction;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
+import dev.gotiger.gTDonationEvent.action.SteakAction;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
@@ -33,6 +34,7 @@ public final class GTDonationEvent extends JavaPlugin {
 
         actionRegistry = new DonationActionRegistry();
         actionRegistry.register(new BreadAction());
+        actionRegistry.register(new SteakAction());
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -62,6 +64,19 @@ public final class GTDonationEvent extends JavaPlugin {
 
         for (Player recipient : target.resolve(player)) {
             bread.execute(recipient, amount);
+        }
+    }
+
+    public void getSteak(Player player, int amount) {
+        getSteak(player, amount, DonationTarget.PLAYER);
+    }
+
+    public void getSteak(Player player, int amount, DonationTarget target) {
+        SteakAction steak = (SteakAction) actionRegistry.get("STEAK")
+                .orElseThrow(() -> new IllegalArgumentException("STEAK action is not registered"));
+
+        for (Player recipient : target.resolve(player)) {
+            steak.execute(recipient, amount);
         }
     }
 }
