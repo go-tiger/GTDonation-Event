@@ -5,6 +5,10 @@ script-mode: true
 chat-shooting:
   fireball-chance: 0.2
 
+exp-bottle:
+  min-count: 3
+  max-count: 8
+
 events:
   1000:
     action: BREAD

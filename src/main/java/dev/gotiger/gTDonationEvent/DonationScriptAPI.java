@@ -3,7 +3,9 @@ package dev.gotiger.gTDonationEvent;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
+import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class DonationScriptAPI {
@@ -48,6 +50,23 @@ public class DonationScriptAPI {
 
     public void getSteak(Player player, int amount, DonationTarget target) {
         run("STEAK", player, amount, target);
+    }
+
+    public void getExpBottle(Player player, String donorName) {
+        getExpBottle(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getExpBottle(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("EXP_BOTTLE").ifPresent(action -> {
+            ExpBottleAction expBottleAction = (ExpBottleAction) action;
+            for (Player recipient : target.resolve(player)) {
+                int thrownCount = expBottleAction.throwBottles(recipient);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 경험치 병 "
+                                + ChatColor.YELLOW + thrownCount + "개" + ChatColor.GRAY + " 지급"
+                );
+            }
+        });
     }
 
     private void run(String actionName, Player player, int amount, DonationTarget target) {
