@@ -26,13 +26,13 @@ public class DonationEventListener implements Listener {
 
     @EventHandler
     public void onDonation(DonationEvent event) {
-        Optional<DonationMapping> mapping = donationConfig.getMapping(event.getAmount());
-        if (mapping.isEmpty()) {
+        if (plugin.isScriptMode()) {
+            plugin.getLogger().info("[SCRIPT] " + event.getDonorName() + " -> " + event.getPlayer().getName() + " : " + event.getAmount());
             return;
         }
 
-        if (plugin.isScriptMode()) {
-            plugin.getLogger().info("[SCRIPT] " + event.getAmount() + " -> " + mapping.get().action());
+        Optional<DonationMapping> mapping = donationConfig.getMapping(event.getAmount());
+        if (mapping.isEmpty()) {
             return;
         }
 
