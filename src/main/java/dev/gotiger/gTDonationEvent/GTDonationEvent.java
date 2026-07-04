@@ -5,6 +5,7 @@ import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
+import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,12 +31,14 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new BreadAction());
         actionRegistry.register(new SteakAction());
 
-        scriptAPI = new DonationScriptAPI(actionRegistry);
+        ChatMiningManager chatMiningManager = new ChatMiningManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
                 this
         );
+        getServer().getPluginManager().registerEvents(chatMiningManager, this);
     }
 
     public boolean isScriptMode() {

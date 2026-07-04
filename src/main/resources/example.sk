@@ -21,3 +21,18 @@ on DonationEvent:
 
     if {_amount} = 1000:
         {_api}.getBread({_player}, 1, DonationTarget.PLAYER)
+
+    if {_amount} = 2000:
+        {_api}.getSteak({_player}, 1, DonationTarget.PLAYER)
+
+    if {_amount} = 3000:
+        # 30초 동안 "영" 다음에 바로 "차"가 오면(다른 시청자가 이어도 됨) 채굴 발동
+        {_api}.getChatMining({_player}, 30, "영", "차", 2, DonationTarget.PLAYER)
+
+    if {_amount} = 4000:
+        # 60초 동안 "채굴"이라는 단어만 채팅에 나오면 즉시 채굴 발동
+        {_api}.getChatMining({_player}, 60, "채굴", null, 3, DonationTarget.PLAYER)
+
+    if {_amount} = 5000:
+        # 30초 동안 단어 조건 없이 채팅이 올라올 때마다 즉시 채굴 발동
+        {_api}.getChatMining({_player}, 30, null, null, 2, DonationTarget.PLAYER)
