@@ -1,0 +1,23 @@
+# ===== GTDonationEvent 스크립트 모드 예제 (Skript + skript-reflect) =====
+# 필요 플러그인: Skript, skript-reflect, GTDonationCore
+#
+# config.yml에서 script-mode: true로 설정하면 GTDonationEvent는
+# 금액에 맞는 action/target을 event.yml에서 찾아 로그만 남기고
+# 실제 처리는 실행하지 않습니다. 아래처럼 DonationEvent를 직접 받아
+# GTDonationEvent에 등록된 DonationAction을 그대로 재사용해 처리하세요.
+
+import:
+    dev.gotiger.gTDonationCore.event.DonationEvent
+    dev.gotiger.gTDonationEvent.GTDonationEvent
+    dev.gotiger.gTDonationEvent.config.DonationTarget
+    org.bukkit.Bukkit
+
+on DonationEvent:
+    set {_plugin} to Bukkit.getPluginManager().getPlugin("GTDonationEvent")
+
+    set {_player} to event.getPlayer()
+    set {_donorName} to event.getDonorName()
+    set {_amount} to event.getAmount()
+
+    if {_amount} = 1000:
+        {_plugin}.getBread({_player}, 1, DonationTarget.PLAYER)
