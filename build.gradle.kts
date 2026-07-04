@@ -16,6 +16,9 @@ java {
 }
 
 tasks {
+    jar {
+        archiveFileName = "GTDonation-Event-${version}.jar"
+    }
     processResources {
         val props = mapOf("version" to version, "description" to project.description)
         filesMatching("plugin.yml") {
