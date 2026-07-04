@@ -39,7 +39,11 @@ on DonationEvent:
 
     if {_amount} = 6000:
         # 30초 동안 채팅이 올라올 때마다 화살 발사 (config.yml의 chat-shooting.fireball-chance 확률로 화염구 발사)
-        {_api}.getChatShooting({_player}, 30, DonationTarget.PLAYER)
+        {_api}.getChatShooting({_player}, 30, null, DonationTarget.PLAYER)
+
+    if {_amount} = 6500:
+        # 30초 동안 "사격"이라는 단어가 포함된 채팅이 올라올 때만 발사
+        {_api}.getChatShooting({_player}, 30, "사격", DonationTarget.PLAYER)
 
     if {_amount} = 7000:
         # 플레이어 앞에 경험치 병을 다수 투척 (개수는 config.yml의 exp-bottle.min-count~max-count 범위에서 랜덤)

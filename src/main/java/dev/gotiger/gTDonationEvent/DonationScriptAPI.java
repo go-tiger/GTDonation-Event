@@ -31,12 +31,12 @@ public class DonationScriptAPI {
         chatMiningManager.start(player, seconds, word1, word2, radius, target);
     }
 
-    public void getChatShooting(Player player, int seconds) {
-        chatShootingManager.start(player, seconds, DonationTarget.PLAYER);
+    public void getChatShooting(Player player, int seconds, String word) {
+        chatShootingManager.start(player, seconds, word, DonationTarget.PLAYER);
     }
 
-    public void getChatShooting(Player player, int seconds, DonationTarget target) {
-        chatShootingManager.start(player, seconds, target);
+    public void getChatShooting(Player player, int seconds, String word, DonationTarget target) {
+        chatShootingManager.start(player, seconds, word, target);
     }
 
     public void getBread(Player player, int amount) {

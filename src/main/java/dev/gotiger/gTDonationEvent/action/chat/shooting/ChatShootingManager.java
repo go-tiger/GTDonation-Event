@@ -23,7 +23,7 @@ public class ChatShootingManager implements Listener {
         this.plugin = plugin;
     }
 
-    public void start(Player donor, int seconds, DonationTarget target) {
+    public void start(Player donor, int seconds, String word, DonationTarget target) {
         long durationMillis = seconds * 1000L;
 
         for (Player watched : target.resolve(donor)) {
@@ -34,7 +34,7 @@ public class ChatShootingManager implements Listener {
                 previous.getBossBar().removeAll();
             }
 
-            ChatShootingSession session = new ChatShootingSession(durationMillis);
+            ChatShootingSession session = new ChatShootingSession(word, durationMillis);
             sessions.put(id, session);
             session.getBossBar().addPlayer(watched);
 
@@ -71,6 +71,10 @@ public class ChatShootingManager implements Listener {
         if (session.isExpired()) {
             session.getBossBar().removeAll();
             sessions.remove(watched.getUniqueId(), session);
+            return;
+        }
+
+        if (!session.matches(event.getMessage())) {
             return;
         }
 
