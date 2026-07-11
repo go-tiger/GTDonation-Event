@@ -172,6 +172,10 @@ on DonationEvent:
         # 30초 동안 채팅이 올라올 때마다 그 메시지를 이름표로 단 좀벌레가 소환되어 플레이어를 공격합니다
         {_api}.getChatRush({_player}, 30, DonationTarget.PLAYER)
 
+    if {_amount} = 49000:
+        # 30초 동안 "펀치"가 포함된 채팅이 올라올 때마다 플레이어가 랜덤 방향으로 넉백됩니다 (chat-punch.strength로 세기 조절)
+        {_api}.getChatPunch({_player}, 30, DonationTarget.PLAYER)
+
     if {_amount} = 27000:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다
