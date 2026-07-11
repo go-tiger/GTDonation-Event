@@ -3,6 +3,7 @@ package dev.gotiger.gTDonationEvent;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
+import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
@@ -49,7 +50,8 @@ public final class GTDonationEvent extends JavaPlugin {
         XrayManager xrayManager = new XrayManager(this);
         SpecialItemManager specialItemManager = new SpecialItemManager(this);
         EnchantScrollManager enchantScrollManager = new EnchantScrollManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager);
+        EnchantFairyManager enchantFairyManager = new EnchantFairyManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),

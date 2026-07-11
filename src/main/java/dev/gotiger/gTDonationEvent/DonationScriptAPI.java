@@ -5,6 +5,7 @@ import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
+import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
@@ -26,8 +27,9 @@ public class DonationScriptAPI {
     private final XrayManager xrayManager;
     private final SpecialItemManager specialItemManager;
     private final EnchantScrollManager enchantScrollManager;
+    private final EnchantFairyManager enchantFairyManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -35,6 +37,30 @@ public class DonationScriptAPI {
         this.xrayManager = xrayManager;
         this.specialItemManager = specialItemManager;
         this.enchantScrollManager = enchantScrollManager;
+        this.enchantFairyManager = enchantFairyManager;
+    }
+
+    public void getEnchantFairy(Player player, String donorName) {
+        getEnchantFairy(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getEnchantFairy(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            boolean started = enchantFairyManager.enhance(recipient, (enchantment, level) ->
+                    recipient.getServer().broadcastMessage(
+                            ChatColor.LIGHT_PURPLE + "강화 요정이 " + ChatColor.WHITE + recipient.getName()
+                                    + ChatColor.LIGHT_PURPLE + "님의 장비를 " + ChatColor.GOLD
+                                    + enchantment.getKey().getKey() + " " + level
+                                    + ChatColor.LIGHT_PURPLE + "(으)로 강화했습니다!"
+                    )
+            );
+
+            if (started) {
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 강화 요정이 나타났습니다!"
+                );
+            }
+        }
     }
 
     public void getEnchantScroll(Player player, String donorName) {

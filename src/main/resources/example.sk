@@ -72,6 +72,10 @@ on DonationEvent:
         {_api}.getSpecialItem({_player}, {_donorName}, DonationTarget.PLAYER)
 
     if {_amount} = 13000:
-        # 즉석 인챈트권 지급 (인벤토리 공간 없으면 바닥 드롭). 우클릭하면 손에 든 아이템에
-        # 적용 가능한 인챈트 중 하나가 1~바닐라 최대레벨로 즉시 적용되고 소모됩니다 (모루 불필요)
+        # 즉석 인챈트권 지급 (인벤토리 공간 없으면 바닥 드롭). 인챈트권을 커서로 든 채로 다른 아이템을
+        # 클릭하면 적용 가능한 인챈트 중 하나가 1~바닐라 최대레벨로 즉시 적용되고 소모됩니다
         {_api}.getEnchantScroll({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 14000:
+        # 강화 요정(벡스)이 나타나 주손/장착 갑옷 중 랜덤 하나를 랜덤 인챈트로 강화 후 사라짐
+        {_api}.getEnchantFairy({_player}, {_donorName}, DonationTarget.PLAYER)
