@@ -111,6 +111,9 @@ weak-monster:
     - SILVERFISH
     - CAVE_SPIDER
 
+burn:
+  duration-seconds: 5
+
 frostbite:
   duration-seconds: 8
   # 1초마다 입는 피해량

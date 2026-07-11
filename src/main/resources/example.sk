@@ -135,3 +135,7 @@ on DonationEvent:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다
         {_api}.getFrostbite({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 28000:
+        # burn.duration-seconds 동안 불이 붙습니다
+        {_api}.getBurn({_player}, {_donorName}, DonationTarget.PLAYER)

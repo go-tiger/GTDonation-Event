@@ -3,6 +3,7 @@ package dev.gotiger.gTDonationEvent;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
+import dev.gotiger.gTDonationEvent.action.burn.BurnAction;
 import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
@@ -63,6 +64,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new KnockbackAction(this));
         actionRegistry.register(new WeakMonsterAction(this));
         actionRegistry.register(new MediumMonsterAction(this));
+        actionRegistry.register(new BurnAction(this));
 
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);

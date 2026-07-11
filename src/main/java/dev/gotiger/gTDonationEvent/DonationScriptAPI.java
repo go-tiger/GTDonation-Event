@@ -411,6 +411,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getBurn(Player player, String donorName) {
+        getBurn(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getBurn(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("BURN").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 화상 발동"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }
