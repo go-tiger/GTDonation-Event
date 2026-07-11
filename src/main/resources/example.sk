@@ -92,3 +92,8 @@ on DonationEvent:
         # 악마의 곡괭이 지급 (네더라이트 곡괭이 모양, 내구도 무한). config.yml의 devil-pickaxe.use-count 만큼
         # 채굴 가능하며, 캔 블록을 중심으로 시선 방향에 수직인 3x3 범위를 함께 채굴 후 사용 횟수가 소진되면 사라짐
         {_api}.getDevilPickaxe({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 18000:
+        # 인벤토리 세이브권 지급. 인벤토리에 가지고 있기만 하면 사망 시 자동으로 발동되어
+        # 아이템/경험치 드롭을 막고(유지), 세이브권 1개만 소모됩니다
+        {_api}.getInventorySave({_player}, {_donorName}, DonationTarget.PLAYER)

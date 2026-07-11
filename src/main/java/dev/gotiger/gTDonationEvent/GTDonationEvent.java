@@ -10,6 +10,7 @@ import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
+import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.TotemAction;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
@@ -57,7 +58,8 @@ public final class GTDonationEvent extends JavaPlugin {
         EnchantFairyManager enchantFairyManager = new EnchantFairyManager(this);
         SoulOutManager soulOutManager = new SoulOutManager(this);
         DevilPickaxeManager devilPickaxeManager = new DevilPickaxeManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager);
+        InventorySaveManager inventorySaveManager = new InventorySaveManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -69,6 +71,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(enchantScrollManager, this);
         getServer().getPluginManager().registerEvents(soulOutManager, this);
         getServer().getPluginManager().registerEvents(devilPickaxeManager, this);
+        getServer().getPluginManager().registerEvents(inventorySaveManager, this);
 
         getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
     }
