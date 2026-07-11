@@ -106,3 +106,7 @@ on DonationEvent:
     if {_amount} = 20000:
         # 체력, 배고픔, 상태 이상 효과를 전체 회복시킵니다
         {_api}.getSuperHeal({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 21000:
+        # config.yml의 random-item.exclude-items를 제외한 모든 아이템 중 하나를 랜덤 지급
+        {_api}.getRandomItem({_player}, {_donorName}, DonationTarget.PLAYER)

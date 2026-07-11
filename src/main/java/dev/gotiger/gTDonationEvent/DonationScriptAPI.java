@@ -11,6 +11,7 @@ import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
+import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
@@ -302,6 +303,26 @@ public class DonationScriptAPI {
                 action.execute(recipient, 0);
                 recipient.getServer().broadcastMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 슈퍼 회복 지급"
+                );
+            }
+        });
+    }
+
+    public void getRandomItem(Player player, String donorName) {
+        getRandomItem(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getRandomItem(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("RANDOM_ITEM").ifPresent(action -> {
+            RandomItemAction randomItemAction = (RandomItemAction) action;
+            for (Player recipient : target.resolve(player)) {
+                var material = randomItemAction.giveRandomItem(recipient);
+                if (material == null) {
+                    continue;
+                }
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 랜덤 아이템 "
+                                + ChatColor.YELLOW + material.name() + ChatColor.GRAY + " 지급"
                 );
             }
         });

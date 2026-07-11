@@ -99,6 +99,24 @@ random-animal:
   # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.
   exclude-entities: []
 
+random-item:
+  # 랜덤 지급 후보에서 제외할 아이템 목록입니다.
+  exclude-items:
+    - BEDROCK
+    - BARRIER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - COMMAND_BLOCK_MINECART
+    - STRUCTURE_BLOCK
+    - STRUCTURE_VOID
+    - JIGSAW
+    - DEBUG_STICK
+    - KNOWLEDGE_BOOK
+    - SPAWNER
+    - LIGHT
+    - PETRIFIED_OAK_SLAB
+
 events:
   1000:
     action: BREAD

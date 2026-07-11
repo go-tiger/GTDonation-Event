@@ -13,6 +13,7 @@ import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
 import dev.gotiger.gTDonationEvent.action.heal.SuperHealAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
+import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
 import dev.gotiger.gTDonationEvent.action.item.TotemAction;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
@@ -51,6 +52,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new RandomBuffAction(this));
         actionRegistry.register(new RandomAnimalAction(this));
         actionRegistry.register(new SuperHealAction());
+        actionRegistry.register(new RandomItemAction(this));
 
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);
