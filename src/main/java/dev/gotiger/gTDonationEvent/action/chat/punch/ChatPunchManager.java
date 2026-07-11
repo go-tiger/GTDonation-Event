@@ -40,6 +40,11 @@ public class ChatPunchManager implements Listener {
             ChatPunchSession session = new ChatPunchSession(durationMillis);
             sessions.put(id, session);
             session.getBossBar().addPlayer(watched);
+            watched.sendTitle(
+                    ChatColor.YELLOW + "" + ChatColor.BOLD + "채팅 펀치 시작!",
+                    ChatColor.WHITE + "채팅에 '펀치'가 포함되면 넉백됩니다.",
+                    10, 40, 10
+            );
 
             new BukkitRunnable() {
                 @Override
