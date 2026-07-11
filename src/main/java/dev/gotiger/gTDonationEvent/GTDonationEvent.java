@@ -145,7 +145,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(miningCurseManager, this);
         getServer().getPluginManager().registerEvents(diamondCurseManager, this);
 
-        getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
+        getCommand("gtdonationevent").setExecutor(new DebugCommand(this, messageService, donationConfig));
     }
 
     public boolean isScriptMode() {

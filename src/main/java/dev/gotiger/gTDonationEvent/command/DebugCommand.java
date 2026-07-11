@@ -1,6 +1,8 @@
 package dev.gotiger.gTDonationEvent.command;
 
 import dev.gotiger.gTDonationEvent.action.status.buff.BuffNameKo;
+import dev.gotiger.gTDonationEvent.config.DonationConfig;
+import dev.gotiger.gTDonationEvent.message.MessageService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,9 +14,13 @@ import java.lang.reflect.Method;
 public class DebugCommand implements CommandExecutor {
 
     private final JavaPlugin plugin;
+    private final MessageService messageService;
+    private final DonationConfig donationConfig;
 
-    public DebugCommand(JavaPlugin plugin) {
+    public DebugCommand(JavaPlugin plugin, MessageService messageService, DonationConfig donationConfig) {
         this.plugin = plugin;
+        this.messageService = messageService;
+        this.donationConfig = donationConfig;
     }
 
     @Override
@@ -24,8 +30,20 @@ public class DebugCommand implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage("사용법: /" + label + " effects");
+        if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+            reload(sender);
+            return true;
+        }
+
+        sender.sendMessage("사용법: /" + label + " <effects|reload>");
         return true;
+    }
+
+    private void reload(CommandSender sender) {
+        plugin.reloadConfig();
+        messageService.load();
+        donationConfig.load(plugin.getConfig());
+        sender.sendMessage("config.yml, messages.yml 리로드 완료.");
     }
 
     private void listEffects(CommandSender sender) {
