@@ -117,6 +117,10 @@ random-item:
     - LIGHT
     - PETRIFIED_OAK_SLAB
 
+monster-scan:
+  radius: 20
+  duration-seconds: 15
+
 events:
   1000:
     action: BREAD
