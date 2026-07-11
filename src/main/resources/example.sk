@@ -160,6 +160,10 @@ on DonationEvent:
         # 현재 체력 기준으로 착지해도 죽지 않는(jump.margin-health만큼 여유) 최대 높이만큼 점프시킵니다
         {_api}.getJump({_player}, {_donorName}, DonationTarget.PLAYER)
 
+    if {_amount} = 46000:
+        # 인벤토리에서 랜덤 아이템 1개를 골라 바닥에 떨어뜨리고 불타는 채로 사라지게 합니다
+        {_api}.getItemRemove({_player}, {_donorName}, DonationTarget.PLAYER)
+
     if {_amount} = 27000:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다

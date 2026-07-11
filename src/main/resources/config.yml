@@ -127,6 +127,10 @@ jump:
   # 죽지 않도록 남겨둘 최소 체력 여유분(하트 0.5 = 1)
   margin-health: 1.0
 
+item-remove:
+  # 드롭된 아이템이 불타는 채로 유지되다가 사라지기까지 걸리는 시간(틱, 20틱 = 1초)
+  burn-duration-ticks: 30
+
 lightning:
   # true면 실제 낙뢰 피해/화재를 입히고, false면 연출(소리/이펙트)만 재생합니다.
   deal-damage: true

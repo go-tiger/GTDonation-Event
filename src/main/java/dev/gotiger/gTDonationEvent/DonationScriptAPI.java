@@ -709,6 +709,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getItemRemove(Player player, String donorName) {
+        getItemRemove(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getItemRemove(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("ITEM_REMOVE").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 아이템 하나가 불타서 사라짐"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }
