@@ -1,6 +1,6 @@
 package dev.gotiger.gTDonationEvent.command;
 
-import dev.gotiger.gTDonationEvent.action.buff.BuffNameKo;
+import dev.gotiger.gTDonationEvent.action.status.buff.BuffNameKo;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
