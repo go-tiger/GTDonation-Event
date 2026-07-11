@@ -16,6 +16,7 @@ import dev.gotiger.gTDonationEvent.action.fanmeeting.FanMeetingManager;
 import dev.gotiger.gTDonationEvent.action.firework.FireworkAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
+import dev.gotiger.gTDonationEvent.action.freefall.FreeFallAction;
 import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
 import dev.gotiger.gTDonationEvent.action.heal.AbsorptionAction;
 import dev.gotiger.gTDonationEvent.action.heal.SuperHealAction;
@@ -82,6 +83,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new MediumMonsterAction(this));
         actionRegistry.register(new StrongMonsterAction(this));
         actionRegistry.register(new BurnAction(this));
+        actionRegistry.register(new FreeFallAction(this));
         actionRegistry.register(new LightningAction(this));
         actionRegistry.register(new TntAction(this));
         actionRegistry.register(new FireworkAction(this));

@@ -119,6 +119,10 @@ weak-monster:
 burn:
   duration-seconds: 5
 
+free-fall:
+  # 현재 위치에서 위로 띄우는 높이(칸)
+  height: 100
+
 lightning:
   # true면 실제 낙뢰 피해/화재를 입히고, false면 연출(소리/이펙트)만 재생합니다.
   deal-damage: true
