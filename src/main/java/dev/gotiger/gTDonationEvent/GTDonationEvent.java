@@ -52,6 +52,7 @@ import dev.gotiger.gTDonationEvent.command.DebugCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
+import dev.gotiger.gTDonationEvent.message.MessageService;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GTDonationEvent extends JavaPlugin {
@@ -98,10 +99,12 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new FireworkAction(this));
         actionRegistry.register(new PokeAction(this));
 
+        MessageService messageService = new MessageService(this);
+
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatRaidManager chatRaidManager = new ChatRaidManager(this);
         ChatRushManager chatRushManager = new ChatRushManager(this);
-        ChatPunchManager chatPunchManager = new ChatPunchManager(this);
+        ChatPunchManager chatPunchManager = new ChatPunchManager(this, messageService);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);
         ScarecrowManager scarecrowManager = new ScarecrowManager(this);
         XrayManager xrayManager = new XrayManager(this);

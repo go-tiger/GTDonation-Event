@@ -2,7 +2,7 @@ package dev.gotiger.gTDonationEvent.action.chat.punch;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
-import org.bukkit.ChatColor;
+import dev.gotiger.gTDonationEvent.message.MessageService;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -19,11 +20,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatPunchManager implements Listener {
 
     private final Plugin plugin;
+    private final MessageService messages;
     private final Random random = new Random();
     private final Map<UUID, ChatPunchSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatPunchManager(Plugin plugin) {
+    public ChatPunchManager(Plugin plugin, MessageService messages) {
         this.plugin = plugin;
+        this.messages = messages;
     }
 
     public void start(Player donor, int seconds, DonationTarget target) {
@@ -41,8 +44,8 @@ public class ChatPunchManager implements Listener {
             sessions.put(id, session);
             session.getBossBar().addPlayer(watched);
             watched.sendTitle(
-                    ChatColor.YELLOW + "" + ChatColor.BOLD + "채팅 펀치 시작!",
-                    ChatColor.WHITE + "채팅에 '펀치'가 포함되면 넉백됩니다.",
+                    messages.get("chat-punch.start-title"),
+                    messages.get("chat-punch.start-subtitle"),
                     10, 40, 10
             );
 
@@ -88,10 +91,11 @@ public class ChatPunchManager implements Listener {
 
         punch(watched);
         int totalPunchCount = session.addPunchCount(1);
-        watched.getServer().broadcastMessage(
-                ChatColor.YELLOW + "[채팅 펀치] " + ChatColor.WHITE + event.getChatterName() + ChatColor.GRAY + "님의 펀치! (총 "
-                        + ChatColor.GOLD + totalPunchCount + "회" + ChatColor.GRAY + ")"
-        );
+
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("chatter", event.getChatterName());
+        placeholders.put("count", String.valueOf(totalPunchCount));
+        watched.getServer().broadcastMessage(messages.get("chat-punch.broadcast", placeholders));
     }
 
     private void punch(Player watched) {
