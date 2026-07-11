@@ -127,6 +127,10 @@ tnt:
   # 폭발까지 걸리는 시간(틱, 20틱 = 1초)
   fuse-ticks: 80
 
+random-teleport:
+  # 순간이동할 최대 반경(칸)
+  radius: 200
+
 firework:
   count: 1
   # 폭죽 크기(터지는 반경)

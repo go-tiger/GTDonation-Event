@@ -34,6 +34,7 @@ import dev.gotiger.gTDonationEvent.action.scale.RandomScaleManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
+import dev.gotiger.gTDonationEvent.action.teleport.RandomTeleportManager;
 import dev.gotiger.gTDonationEvent.action.tnt.TntAction;
 import dev.gotiger.gTDonationEvent.action.view.RandomViewAction;
 import dev.gotiger.gTDonationEvent.action.waterprison.WaterPrisonManager;
@@ -101,7 +102,8 @@ public final class GTDonationEvent extends JavaPlugin {
         WaterPrisonManager waterPrisonManager = new WaterPrisonManager(this);
         SlotLockManager slotLockManager = new SlotLockManager(this);
         MiningCurseManager miningCurseManager = new MiningCurseManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager);
+        RandomTeleportManager randomTeleportManager = new RandomTeleportManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),

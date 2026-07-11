@@ -135,6 +135,10 @@ on DonationEvent:
         # strong-monster.candidates 중 하나를 플레이어 주변(strong-monster.radius)에 랜덤 소환
         {_api}.getStrongMonster({_player}, {_donorName}, DonationTarget.PLAYER)
 
+    if {_amount} = 40000:
+        # 3초 카운트다운 타이틀 표시 후 random-teleport.radius 이내 랜덤 위치로 순간이동
+        {_api}.getRandomTeleport({_player}, {_donorName}, DonationTarget.PLAYER)
+
     if {_amount} = 27000:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다
