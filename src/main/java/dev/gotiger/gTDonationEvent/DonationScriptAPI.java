@@ -10,6 +10,7 @@ import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
+import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemMessageSender;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
@@ -28,8 +29,9 @@ public class DonationScriptAPI {
     private final SpecialItemManager specialItemManager;
     private final EnchantScrollManager enchantScrollManager;
     private final EnchantFairyManager enchantFairyManager;
+    private final SoulOutManager soulOutManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -38,6 +40,23 @@ public class DonationScriptAPI {
         this.specialItemManager = specialItemManager;
         this.enchantScrollManager = enchantScrollManager;
         this.enchantFairyManager = enchantFairyManager;
+        this.soulOutManager = soulOutManager;
+    }
+
+    public void getSoulOutCharm(Player player, String donorName) {
+        getSoulOutCharm(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getSoulOutCharm(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            var leftover = recipient.getInventory().addItem(soulOutManager.createCharm());
+            for (var remaining : leftover.values()) {
+                recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
+            }
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 유체이탈의 부적 지급"
+            );
+        }
     }
 
     public void getEnchantFairy(Player player, String donorName) {

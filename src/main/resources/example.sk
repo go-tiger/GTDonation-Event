@@ -82,3 +82,8 @@ on DonationEvent:
 
     if {_amount} = 15000:
         {_api}.getTotem({_player}, 1, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 16000:
+        # 유체이탈의 부적 지급. 우클릭하면 config.yml의 soul-out.duration-seconds 동안 스펙테이터 모드가 되어
+        # 주변을 뚫어볼 수 있고(다른 유저에게는 안 보임), 시간이 지나면 원래 위치/모드로 자동 복귀
+        {_api}.getSoulOutCharm({_player}, {_donorName}, DonationTarget.PLAYER)

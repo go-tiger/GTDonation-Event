@@ -82,6 +82,9 @@ special-item:
     - TOTEM_OF_UNDYING
     - ELYTRA
 
+soul-out:
+  duration-seconds: 30
+
 random-animal:
   radius: 1
   # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.

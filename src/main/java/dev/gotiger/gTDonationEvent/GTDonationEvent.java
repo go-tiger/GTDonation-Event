@@ -12,6 +12,7 @@ import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
 import dev.gotiger.gTDonationEvent.action.item.TotemAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
+import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.DebugCommand;
@@ -53,7 +54,8 @@ public final class GTDonationEvent extends JavaPlugin {
         SpecialItemManager specialItemManager = new SpecialItemManager(this);
         EnchantScrollManager enchantScrollManager = new EnchantScrollManager(this);
         EnchantFairyManager enchantFairyManager = new EnchantFairyManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager);
+        SoulOutManager soulOutManager = new SoulOutManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -63,6 +65,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(chatShootingManager, this);
         getServer().getPluginManager().registerEvents(scarecrowManager, this);
         getServer().getPluginManager().registerEvents(enchantScrollManager, this);
+        getServer().getPluginManager().registerEvents(soulOutManager, this);
 
         getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
     }
