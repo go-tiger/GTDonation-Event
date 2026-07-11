@@ -1,6 +1,7 @@
 package dev.gotiger.gTDonationEvent;
 
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
+import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
@@ -84,6 +85,24 @@ public class DonationScriptAPI {
                 recipient.getServer().broadcastMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 경험치 병 "
                                 + ChatColor.YELLOW + thrownCount + "개" + ChatColor.GRAY + " 지급"
+                );
+            }
+        });
+    }
+
+    public void getRandomAnimal(Player player, String donorName) {
+        getRandomAnimal(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getRandomAnimal(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("ANIMAL").ifPresent(action -> {
+            RandomAnimalAction randomAnimalAction = (RandomAnimalAction) action;
+            for (Player recipient : target.resolve(player)) {
+                if (randomAnimalAction.spawnAnimal(recipient) == null) {
+                    continue;
+                }
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 동물을 소환"
                 );
             }
         });

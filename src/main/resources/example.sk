@@ -52,3 +52,7 @@ on DonationEvent:
     if {_amount} = 8000:
         # 서버에 등록된 포션 효과 중 config.yml의 random-buff.exclude-effects에 없는 것을 랜덤 지급 (지속시간/세기도 config에서 설정)
         {_api}.getRandomBuff({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 9000:
+        # 서버에 등록된 생물 중 config.yml의 random-animal.exclude-entities에 없는 것을 플레이어 주변(random-animal.radius)에 랜덤 소환
+        {_api}.getRandomAnimal({_player}, {_donorName}, DonationTarget.PLAYER)

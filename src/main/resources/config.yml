@@ -38,6 +38,11 @@ random-buff:
     - INSTANT_DAMAGE
     - HARM
 
+random-animal:
+  radius: 1
+  # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.
+  exclude-entities: []
+
 events:
   1000:
     action: BREAD
