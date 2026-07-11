@@ -13,6 +13,7 @@ import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
+import dev.gotiger.gTDonationEvent.action.lock.SlotLockManager;
 import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
@@ -47,8 +48,9 @@ public class DonationScriptAPI {
     private final FrostbiteManager frostbiteManager;
     private final RandomScaleManager randomScaleManager;
     private final WaterPrisonManager waterPrisonManager;
+    private final SlotLockManager slotLockManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -65,6 +67,22 @@ public class DonationScriptAPI {
         this.frostbiteManager = frostbiteManager;
         this.randomScaleManager = randomScaleManager;
         this.waterPrisonManager = waterPrisonManager;
+        this.slotLockManager = slotLockManager;
+    }
+
+    public void getSlotLock(Player player, String donorName) {
+        getSlotLock(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getSlotLock(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            if (!slotLockManager.lock(recipient)) {
+                continue;
+            }
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 인벤토리 슬롯 하나가 잠김"
+            );
+        }
     }
 
     public void getWaterPrison(Player player, String donorName) {

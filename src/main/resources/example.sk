@@ -165,3 +165,7 @@ on DonationEvent:
         # 유리+물로 된 감옥에 가두고, 랜덤한 시야 회전 방향 순서(water-prison.sequence-length개)를 맞춰야 탈출.
         # water-prison.timeout-seconds 안에 못 맞추면 자동 해제됩니다
         {_api}.getWaterPrison({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 35000:
+        # 빈 인벤토리 슬롯 하나를 slot-lock.duration-seconds 동안 사용 불가로 잠급니다
+        {_api}.getSlotLock({_player}, {_donorName}, DonationTarget.PLAYER)
