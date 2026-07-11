@@ -56,3 +56,8 @@ on DonationEvent:
     if {_amount} = 9000:
         # 서버에 등록된 생물 중 config.yml의 random-animal.exclude-entities에 없는 것을 플레이어 주변(random-animal.radius)에 랜덤 소환
         {_api}.getRandomAnimal({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 10000:
+        # 플레이어 정면 2칸 앞에 음식 허수아비 소환 (config.yml의 scarecrow.duration-seconds 동안 유지,
+        # 때리면 scarecrow.food-material/food-count 만큼 음식 지급, 이름표에 맞은 횟수 표시)
+        {_api}.getScarecrow({_player}, {_donorName}, DonationTarget.PLAYER)
