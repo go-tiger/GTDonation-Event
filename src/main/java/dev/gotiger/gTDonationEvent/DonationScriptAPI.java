@@ -12,6 +12,7 @@ import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
+import dev.gotiger.gTDonationEvent.action.fanmeeting.FanMeetingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
@@ -56,8 +57,9 @@ public class DonationScriptAPI {
     private final SlotLockManager slotLockManager;
     private final MiningCurseManager miningCurseManager;
     private final RandomTeleportManager randomTeleportManager;
+    private final FanMeetingManager fanMeetingManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -77,6 +79,20 @@ public class DonationScriptAPI {
         this.slotLockManager = slotLockManager;
         this.miningCurseManager = miningCurseManager;
         this.randomTeleportManager = randomTeleportManager;
+        this.fanMeetingManager = fanMeetingManager;
+    }
+
+    public void getFanMeeting(Player player, String donorName) {
+        getFanMeeting(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getFanMeeting(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            fanMeetingManager.summon(recipient, donorName);
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 팬미팅!"
+            );
+        }
     }
 
     public void getRandomTeleport(Player player, String donorName) {

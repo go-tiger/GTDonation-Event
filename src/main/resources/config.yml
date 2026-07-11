@@ -131,6 +131,11 @@ random-teleport:
   # 순간이동할 최대 반경(칸)
   radius: 200
 
+fan-meeting:
+  min-count: 5
+  max-count: 10
+  radius: 5
+
 firework:
   count: 1
   # 폭죽 크기(터지는 반경)
