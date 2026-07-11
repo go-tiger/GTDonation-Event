@@ -114,3 +114,7 @@ on DonationEvent:
     if {_amount} = 22000:
         # 플레이어 주변(monster-scan.radius) 몬스터를 monster-scan.duration-seconds 동안 글로우로 탐지
         {_api}.getMonsterScan({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 23000:
+        # absorption.hearts 만큼의 추가 체력(노란 하트)을 absorption.duration-seconds 동안 지급
+        {_api}.getAbsorption({_player}, {_donorName}, DonationTarget.PLAYER)

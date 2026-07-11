@@ -121,6 +121,11 @@ monster-scan:
   radius: 20
   duration-seconds: 15
 
+absorption:
+  duration-seconds: 60
+  # 지급할 추가 체력(하트 단위, 1하트 = 체력 2)
+  hearts: 4
+
 events:
   1000:
     action: BREAD
