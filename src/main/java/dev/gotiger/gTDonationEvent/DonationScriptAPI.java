@@ -18,6 +18,7 @@ import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
 import dev.gotiger.gTDonationEvent.action.lock.SlotLockManager;
 import dev.gotiger.gTDonationEvent.action.miningcurse.MiningCurseManager;
 import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
+import dev.gotiger.gTDonationEvent.action.monster.StrongMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
@@ -590,6 +591,24 @@ public class DonationScriptAPI {
                 action.execute(recipient, 0);
                 recipient.getServer().broadcastMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 시야가 강제로 변경됨"
+                );
+            }
+        });
+    }
+
+    public void getStrongMonster(Player player, String donorName) {
+        getStrongMonster(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getStrongMonster(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("STRONG_MONSTER").ifPresent(action -> {
+            StrongMonsterAction strongMonsterAction = (StrongMonsterAction) action;
+            for (Player recipient : target.resolve(player)) {
+                if (strongMonsterAction.spawnMonster(recipient) == null) {
+                    continue;
+                }
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 상급 몬스터를 소환"
                 );
             }
         });

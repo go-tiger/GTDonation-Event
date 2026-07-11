@@ -131,6 +131,10 @@ on DonationEvent:
         # medium-monster.candidates 중 하나를 플레이어 주변(medium-monster.radius)에 랜덤 소환
         {_api}.getMediumMonster({_player}, {_donorName}, DonationTarget.PLAYER)
 
+    if {_amount} = 39000:
+        # strong-monster.candidates 중 하나를 플레이어 주변(strong-monster.radius)에 랜덤 소환
+        {_api}.getStrongMonster({_player}, {_donorName}, DonationTarget.PLAYER)
+
     if {_amount} = 27000:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다

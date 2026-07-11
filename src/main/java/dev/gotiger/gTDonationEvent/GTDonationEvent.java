@@ -26,6 +26,7 @@ import dev.gotiger.gTDonationEvent.action.knockback.PokeAction;
 import dev.gotiger.gTDonationEvent.action.lightning.LightningAction;
 import dev.gotiger.gTDonationEvent.action.miningcurse.MiningCurseManager;
 import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
+import dev.gotiger.gTDonationEvent.action.monster.StrongMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
@@ -76,6 +77,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new KnockbackAction(this));
         actionRegistry.register(new WeakMonsterAction(this));
         actionRegistry.register(new MediumMonsterAction(this));
+        actionRegistry.register(new StrongMonsterAction(this));
         actionRegistry.register(new BurnAction(this));
         actionRegistry.register(new LightningAction(this));
         actionRegistry.register(new TntAction(this));
