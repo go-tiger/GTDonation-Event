@@ -9,6 +9,7 @@ import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
+import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.DebugCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
@@ -43,7 +44,8 @@ public final class GTDonationEvent extends JavaPlugin {
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);
         ScarecrowManager scarecrowManager = new ScarecrowManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager);
+        XrayManager xrayManager = new XrayManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),

@@ -43,6 +43,31 @@ scarecrow:
   food-material: CARROT
   food-count: 1
 
+xray:
+  radius: 8
+  duration-seconds: 60
+  # 감지할 광석 블록과 그 글로우 색상(ChatColor 이름)입니다.
+  ores:
+    COAL_ORE: BLACK
+    DEEPSLATE_COAL_ORE: BLACK
+    IRON_ORE: WHITE
+    DEEPSLATE_IRON_ORE: WHITE
+    COPPER_ORE: GOLD
+    DEEPSLATE_COPPER_ORE: GOLD
+    GOLD_ORE: YELLOW
+    DEEPSLATE_GOLD_ORE: YELLOW
+    REDSTONE_ORE: RED
+    DEEPSLATE_REDSTONE_ORE: RED
+    LAPIS_ORE: BLUE
+    DEEPSLATE_LAPIS_ORE: BLUE
+    DIAMOND_ORE: AQUA
+    DEEPSLATE_DIAMOND_ORE: AQUA
+    EMERALD_ORE: GREEN
+    DEEPSLATE_EMERALD_ORE: GREEN
+    NETHER_QUARTZ_ORE: LIGHT_PURPLE
+    NETHER_GOLD_ORE: YELLOW
+    ANCIENT_DEBRIS: DARK_RED
+
 random-animal:
   radius: 1
   # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.

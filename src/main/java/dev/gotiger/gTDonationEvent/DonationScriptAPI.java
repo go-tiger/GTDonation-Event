@@ -8,6 +8,7 @@ import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
+import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,12 +20,24 @@ public class DonationScriptAPI {
     private final ChatMiningManager chatMiningManager;
     private final ChatShootingManager chatShootingManager;
     private final ScarecrowManager scarecrowManager;
+    private final XrayManager xrayManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
         this.scarecrowManager = scarecrowManager;
+        this.xrayManager = xrayManager;
+    }
+
+    public void getXray(Player player, String donorName) {
+        getXray(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getXray(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            xrayManager.reveal(recipient);
+        }
     }
 
     public void getScarecrow(Player player, String donorName) {

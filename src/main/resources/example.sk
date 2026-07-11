@@ -61,3 +61,7 @@ on DonationEvent:
         # 플레이어 정면 2칸 앞에 음식 허수아비 소환 (config.yml의 scarecrow.duration-seconds 동안 유지,
         # 때리면 scarecrow.food-material/food-count 만큼 음식 지급, 이름표에 맞은 횟수 표시)
         {_api}.getScarecrow({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 11000:
+        # 플레이어 주변(xray.radius) 지하 광석을 xray.duration-seconds 동안 광물색 글로우로 표시 (config.yml의 xray.ores에서 광물-색 매핑)
+        {_api}.getXray({_player}, {_donorName}, DonationTarget.PLAYER)
