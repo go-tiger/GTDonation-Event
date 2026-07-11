@@ -24,6 +24,7 @@ import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
 import dev.gotiger.gTDonationEvent.action.rotfood.RotFoodAction;
 import dev.gotiger.gTDonationEvent.action.item.TotemAction;
+import dev.gotiger.gTDonationEvent.action.jump.JumpAction;
 import dev.gotiger.gTDonationEvent.action.knockback.KnockbackAction;
 import dev.gotiger.gTDonationEvent.action.lock.SlotLockManager;
 import dev.gotiger.gTDonationEvent.action.knockback.PokeAction;
@@ -78,6 +79,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new SuperHealAction());
         actionRegistry.register(new RandomItemAction(this));
         actionRegistry.register(new RotFoodAction());
+        actionRegistry.register(new JumpAction(this));
         actionRegistry.register(new RandomViewAction(this));
         actionRegistry.register(new AbsorptionAction(this));
         actionRegistry.register(new KnockbackAction(this));

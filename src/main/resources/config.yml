@@ -123,6 +123,10 @@ free-fall:
   # 현재 위치에서 위로 띄우는 높이(칸)
   height: 100
 
+jump:
+  # 죽지 않도록 남겨둘 최소 체력 여유분(하트 0.5 = 1)
+  margin-health: 1.0
+
 lightning:
   # true면 실제 낙뢰 피해/화재를 입히고, false면 연출(소리/이펙트)만 재생합니다.
   deal-damage: true

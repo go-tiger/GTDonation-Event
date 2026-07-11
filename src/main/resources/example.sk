@@ -156,6 +156,10 @@ on DonationEvent:
         # 인벤토리에 보유중인 모든 음식을 썩은 살점으로 교체합니다
         {_api}.getRotFood({_player}, {_donorName}, DonationTarget.PLAYER)
 
+    if {_amount} = 45000:
+        # 현재 체력 기준으로 착지해도 죽지 않는(jump.margin-health만큼 여유) 최대 높이만큼 점프시킵니다
+        {_api}.getJump({_player}, {_donorName}, DonationTarget.PLAYER)
+
     if {_amount} = 27000:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다

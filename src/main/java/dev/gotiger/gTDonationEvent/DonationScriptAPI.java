@@ -694,6 +694,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getJump(Player player, String donorName) {
+        getJump(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getJump(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("JUMP").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 점프 발동"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }
