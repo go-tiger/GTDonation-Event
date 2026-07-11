@@ -70,3 +70,8 @@ on DonationEvent:
         # 플레이어 앞에 아이템 디스플레이가 special-item.candidates 목록 사이를 슬롯머신처럼 순회하다가
         # special-item.spin-seconds 후 당첨 아이템에 멈추고 special-item.drop-mode(인벤토리/드롭)로 지급
         {_api}.getSpecialItem({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 13000:
+        # 즉석 인챈트권 지급 (인벤토리 공간 없으면 바닥 드롭). 우클릭하면 손에 든 아이템에
+        # 적용 가능한 인챈트 중 하나가 1~바닐라 최대레벨로 즉시 적용되고 소모됩니다 (모루 불필요)
+        {_api}.getEnchantScroll({_player}, {_donorName}, DonationTarget.PLAYER)

@@ -5,6 +5,7 @@ import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
+import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
@@ -24,14 +25,32 @@ public class DonationScriptAPI {
     private final ScarecrowManager scarecrowManager;
     private final XrayManager xrayManager;
     private final SpecialItemManager specialItemManager;
+    private final EnchantScrollManager enchantScrollManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
         this.scarecrowManager = scarecrowManager;
         this.xrayManager = xrayManager;
         this.specialItemManager = specialItemManager;
+        this.enchantScrollManager = enchantScrollManager;
+    }
+
+    public void getEnchantScroll(Player player, String donorName) {
+        getEnchantScroll(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getEnchantScroll(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            var leftover = recipient.getInventory().addItem(enchantScrollManager.createScroll());
+            for (var remaining : leftover.values()) {
+                recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
+            }
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 즉석 인챈트권 지급"
+            );
+        }
     }
 
     public void getSpecialItem(Player player, String donorName) {
