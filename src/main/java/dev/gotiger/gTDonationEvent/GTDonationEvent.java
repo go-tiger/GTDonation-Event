@@ -3,6 +3,7 @@ package dev.gotiger.gTDonationEvent;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
+import dev.gotiger.gTDonationEvent.action.buff.RandomDebuffAction;
 import dev.gotiger.gTDonationEvent.action.burn.BurnAction;
 import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
@@ -65,6 +66,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new TotemAction());
         actionRegistry.register(new ExpBottleAction(this));
         actionRegistry.register(new RandomBuffAction(this));
+        actionRegistry.register(new RandomDebuffAction(this));
         actionRegistry.register(new RandomAnimalAction(this));
         actionRegistry.register(new SuperHealAction());
         actionRegistry.register(new RandomItemAction(this));

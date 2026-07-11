@@ -38,6 +38,11 @@ random-buff:
     - INSTANT_DAMAGE
     - HARM
 
+random-debuff:
+  duration-seconds: 30
+  amplifier: 1
+  # 지급 후보 목록은 random-buff.exclude-effects를 그대로 사용합니다.
+
 scarecrow:
   duration-seconds: 60
   food-material: CARROT

@@ -3,7 +3,9 @@ package dev.gotiger.gTDonationEvent;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
+import dev.gotiger.gTDonationEvent.action.buff.BuffNameKo;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
+import dev.gotiger.gTDonationEvent.action.buff.RandomDebuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
 import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
@@ -363,6 +365,26 @@ public class DonationScriptAPI {
                     continue;
                 }
                 BuffMessageSender.broadcastBuffMessage(recipient, donorName, effectType);
+            }
+        });
+    }
+
+    public void getRandomDebuff(Player player, String donorName) {
+        getRandomDebuff(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getRandomDebuff(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("DEBUFF").ifPresent(action -> {
+            RandomDebuffAction randomDebuffAction = (RandomDebuffAction) action;
+            for (Player recipient : target.resolve(player)) {
+                PotionEffectType effectType = randomDebuffAction.applyDebuff(recipient);
+                if (effectType == null) {
+                    continue;
+                }
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 "
+                                + ChatColor.DARK_RED + BuffNameKo.of(effectType) + ChatColor.GRAY + " 디버프를 받음"
+                );
             }
         });
     }
