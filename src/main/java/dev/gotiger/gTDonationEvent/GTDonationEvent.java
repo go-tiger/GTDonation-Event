@@ -27,6 +27,7 @@ import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
+import dev.gotiger.gTDonationEvent.action.tnt.TntAction;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.DebugCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
@@ -67,6 +68,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new MediumMonsterAction(this));
         actionRegistry.register(new BurnAction(this));
         actionRegistry.register(new LightningAction(this));
+        actionRegistry.register(new TntAction(this));
 
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);

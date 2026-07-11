@@ -143,3 +143,7 @@ on DonationEvent:
     if {_amount} = 29000:
         # 플레이어 위치에 번개를 떨어뜨립니다 (lightning.deal-damage로 실제 피해 여부 설정)
         {_api}.getLightning({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 30000:
+        # 플레이어 위치에 활성화된(도화선이 이미 붙은) TNT를 소환합니다 (tnt.fuse-ticks 후 폭발)
+        {_api}.getTnt({_player}, {_donorName}, DonationTarget.PLAYER)

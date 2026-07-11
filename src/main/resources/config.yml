@@ -118,6 +118,10 @@ lightning:
   # true면 실제 낙뢰 피해/화재를 입히고, false면 연출(소리/이펙트)만 재생합니다.
   deal-damage: true
 
+tnt:
+  # 폭발까지 걸리는 시간(틱, 20틱 = 1초)
+  fuse-ticks: 80
+
 frostbite:
   duration-seconds: 8
   # 1초마다 입는 피해량

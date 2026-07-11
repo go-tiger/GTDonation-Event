@@ -441,6 +441,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getTnt(Player player, String donorName) {
+        getTnt(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getTnt(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("TNT").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 TNT를 소환"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }
