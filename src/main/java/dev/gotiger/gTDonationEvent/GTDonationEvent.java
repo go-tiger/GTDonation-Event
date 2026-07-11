@@ -31,6 +31,7 @@ import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
 import dev.gotiger.gTDonationEvent.action.tnt.TntAction;
+import dev.gotiger.gTDonationEvent.action.waterprison.WaterPrisonManager;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.DebugCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
@@ -89,7 +90,8 @@ public final class GTDonationEvent extends JavaPlugin {
         MonsterScanManager monsterScanManager = new MonsterScanManager(this);
         FrostbiteManager frostbiteManager = new FrostbiteManager(this);
         RandomScaleManager randomScaleManager = new RandomScaleManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager);
+        WaterPrisonManager waterPrisonManager = new WaterPrisonManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -102,6 +104,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(soulOutManager, this);
         getServer().getPluginManager().registerEvents(devilPickaxeManager, this);
         getServer().getPluginManager().registerEvents(inventorySaveManager, this);
+        getServer().getPluginManager().registerEvents(waterPrisonManager, this);
 
         getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
     }

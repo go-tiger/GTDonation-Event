@@ -137,6 +137,16 @@ random-scale:
   min-scale: 0.5
   max-scale: 2.0
 
+water-prison:
+  # 탈출하려면 맞춰야 하는 시야 회전 방향 순서 길이
+  sequence-length: 4
+  # 제한 시간(초) 내에 탈출하지 못하면 자동 해제
+  timeout-seconds: 60
+  # 감옥 가로/세로 반경(칸)
+  radius: 1
+  # 감옥 높이(칸)
+  height: 2
+
 frostbite:
   duration-seconds: 8
   # 1초마다 입는 피해량
