@@ -68,6 +68,20 @@ xray:
     NETHER_GOLD_ORE: YELLOW
     ANCIENT_DEBRIS: DARK_RED
 
+special-item:
+  # 연출이 끝난 후 아이템 지급 방식: INVENTORY_FIRST(인벤토리 우선, 가득이면 드롭) / DROP_ONLY(무조건 드롭)
+  drop-mode: INVENTORY_FIRST
+  spin-seconds: 2
+  candidates:
+    - NETHERITE_INGOT
+    - DIAMOND
+    - EMERALD
+    - GOLDEN_APPLE
+    - ENCHANTED_GOLDEN_APPLE
+    - NETHER_STAR
+    - TOTEM_OF_UNDYING
+    - ELYTRA
+
 random-animal:
   radius: 1
   # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.

@@ -65,3 +65,8 @@ on DonationEvent:
     if {_amount} = 11000:
         # 플레이어 주변(xray.radius) 지하 광석을 xray.duration-seconds 동안 광물색 글로우로 표시 (config.yml의 xray.ores에서 광물-색 매핑)
         {_api}.getXray({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 12000:
+        # 플레이어 앞에 아이템 디스플레이가 special-item.candidates 목록 사이를 슬롯머신처럼 순회하다가
+        # special-item.spin-seconds 후 당첨 아이템에 멈추고 special-item.drop-mode(인벤토리/드롭)로 지급
+        {_api}.getSpecialItem({_player}, {_donorName}, DonationTarget.PLAYER)

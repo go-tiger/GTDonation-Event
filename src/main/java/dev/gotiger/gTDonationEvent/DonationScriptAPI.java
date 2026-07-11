@@ -8,6 +8,8 @@ import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
+import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
+import dev.gotiger.gTDonationEvent.action.special.SpecialItemMessageSender;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import org.bukkit.ChatColor;
@@ -21,13 +23,30 @@ public class DonationScriptAPI {
     private final ChatShootingManager chatShootingManager;
     private final ScarecrowManager scarecrowManager;
     private final XrayManager xrayManager;
+    private final SpecialItemManager specialItemManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
         this.scarecrowManager = scarecrowManager;
         this.xrayManager = xrayManager;
+        this.specialItemManager = specialItemManager;
+    }
+
+    public void getSpecialItem(Player player, String donorName) {
+        getSpecialItem(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getSpecialItem(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 특별한 아이템 룰렛!"
+            );
+            specialItemManager.spin(recipient, material ->
+                    SpecialItemMessageSender.broadcastResultMessage(recipient, donorName, material)
+            );
+        }
     }
 
     public void getXray(Player player, String donorName) {
