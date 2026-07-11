@@ -87,3 +87,8 @@ on DonationEvent:
         # 유체이탈의 부적 지급. 우클릭하면 config.yml의 soul-out.duration-seconds 동안 스펙테이터 모드가 되어
         # 주변을 뚫어볼 수 있고(다른 유저에게는 안 보임), 시간이 지나면 원래 위치/모드로 자동 복귀
         {_api}.getSoulOutCharm({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 17000:
+        # 악마의 곡괭이 지급 (네더라이트 곡괭이 모양, 내구도 무한). config.yml의 devil-pickaxe.use-count 만큼
+        # 채굴 가능하며, 캔 블록을 중심으로 시선 방향에 수직인 3x3 범위를 함께 채굴 후 사용 횟수가 소진되면 사라짐
+        {_api}.getDevilPickaxe({_player}, {_donorName}, DonationTarget.PLAYER)

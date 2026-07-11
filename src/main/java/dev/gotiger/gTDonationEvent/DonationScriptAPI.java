@@ -9,6 +9,7 @@ import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
+import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
@@ -30,8 +31,9 @@ public class DonationScriptAPI {
     private final EnchantScrollManager enchantScrollManager;
     private final EnchantFairyManager enchantFairyManager;
     private final SoulOutManager soulOutManager;
+    private final DevilPickaxeManager devilPickaxeManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -41,6 +43,23 @@ public class DonationScriptAPI {
         this.enchantScrollManager = enchantScrollManager;
         this.enchantFairyManager = enchantFairyManager;
         this.soulOutManager = soulOutManager;
+        this.devilPickaxeManager = devilPickaxeManager;
+    }
+
+    public void getDevilPickaxe(Player player, String donorName) {
+        getDevilPickaxe(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getDevilPickaxe(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            var leftover = recipient.getInventory().addItem(devilPickaxeManager.createPickaxe());
+            for (var remaining : leftover.values()) {
+                recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
+            }
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 악마의 곡괭이 지급"
+            );
+        }
     }
 
     public void getSoulOutCharm(Player player, String donorName) {
