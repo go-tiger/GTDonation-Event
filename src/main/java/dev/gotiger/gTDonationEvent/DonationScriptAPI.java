@@ -149,6 +149,21 @@ public class DonationScriptAPI {
         run("STEAK", player, amount, target);
     }
 
+    public void getTotem(Player player, int amount, String donorName) {
+        getTotem(player, amount, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getTotem(Player player, int amount, String donorName, DonationTarget target) {
+        actionRegistry.get("TOTEM").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, amount);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 불사의 토템 지급"
+                );
+            }
+        });
+    }
+
     public void getRandomBuff(Player player, String donorName) {
         getRandomBuff(player, donorName, DonationTarget.PLAYER);
     }

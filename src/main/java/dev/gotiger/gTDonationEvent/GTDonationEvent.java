@@ -10,6 +10,7 @@ import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
+import dev.gotiger.gTDonationEvent.action.item.TotemAction;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
@@ -40,6 +41,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry = new DonationActionRegistry();
         actionRegistry.register(new BreadAction());
         actionRegistry.register(new SteakAction());
+        actionRegistry.register(new TotemAction());
         actionRegistry.register(new ExpBottleAction(this));
         actionRegistry.register(new RandomBuffAction(this));
         actionRegistry.register(new RandomAnimalAction(this));

@@ -79,3 +79,6 @@ on DonationEvent:
     if {_amount} = 14000:
         # 강화 요정(벡스)이 나타나 주손/장착 갑옷 중 랜덤 하나를 랜덤 인챈트로 강화 후 사라짐
         {_api}.getEnchantFairy({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 15000:
+        {_api}.getTotem({_player}, 1, {_donorName}, DonationTarget.PLAYER)
