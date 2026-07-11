@@ -152,6 +152,10 @@ on DonationEvent:
         # 플레이어를 현재 위치보다 free-fall.height 만큼 높은 공중으로 순간이동시켜 자유낙하시킵니다
         {_api}.getFreeFall({_player}, {_donorName}, DonationTarget.PLAYER)
 
+    if {_amount} = 44000:
+        # 인벤토리에 보유중인 모든 음식을 썩은 살점으로 교체합니다
+        {_api}.getRotFood({_player}, {_donorName}, DonationTarget.PLAYER)
+
     if {_amount} = 27000:
         # 가루눈에 들어간 것과 같은 동상 상태(느려짐+빙결)를 즉시 적용하고 frostbite.duration-seconds 동안
         # 매초 frostbite.damage-per-tick 만큼 피해를 입힙니다
