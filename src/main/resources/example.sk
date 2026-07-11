@@ -177,3 +177,7 @@ on DonationEvent:
     if {_amount} = 37000:
         # random-debuff.candidates 중 하나를 랜덤 지급 (지속시간/세기는 config에서 설정)
         {_api}.getRandomDebuff({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 38000:
+        # 플레이어 시야를 random-view.interval-ticks 간격으로 random-view.count번 랜덤하게 강제 변경
+        {_api}.getRandomView({_player}, {_donorName}, DonationTarget.PLAYER)

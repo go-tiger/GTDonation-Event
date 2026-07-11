@@ -580,6 +580,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getRandomView(Player player, String donorName) {
+        getRandomView(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getRandomView(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("RANDOM_VIEW").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 시야가 강제로 변경됨"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }

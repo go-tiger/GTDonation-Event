@@ -34,6 +34,7 @@ import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
 import dev.gotiger.gTDonationEvent.action.tnt.TntAction;
+import dev.gotiger.gTDonationEvent.action.view.RandomViewAction;
 import dev.gotiger.gTDonationEvent.action.waterprison.WaterPrisonManager;
 import dev.gotiger.gTDonationEvent.action.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.DebugCommand;
@@ -70,6 +71,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new RandomAnimalAction(this));
         actionRegistry.register(new SuperHealAction());
         actionRegistry.register(new RandomItemAction(this));
+        actionRegistry.register(new RandomViewAction(this));
         actionRegistry.register(new AbsorptionAction(this));
         actionRegistry.register(new KnockbackAction(this));
         actionRegistry.register(new WeakMonsterAction(this));

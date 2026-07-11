@@ -142,6 +142,12 @@ random-scale:
   min-scale: 0.5
   max-scale: 2.0
 
+random-view:
+  # 시야를 랜덤하게 바꾸는 횟수
+  count: 15
+  # 변경 간 간격(틱, 20틱 = 1초)
+  interval-ticks: 10
+
 water-prison:
   # 탈출하려면 맞춰야 하는 시야 회전 방향 순서 길이
   sequence-length: 4
