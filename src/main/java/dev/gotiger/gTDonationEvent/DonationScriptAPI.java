@@ -426,6 +426,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getLightning(Player player, String donorName) {
+        getLightning(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getLightning(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("LIGHTNING").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 벼락 발동"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }

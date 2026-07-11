@@ -139,3 +139,7 @@ on DonationEvent:
     if {_amount} = 28000:
         # burn.duration-seconds 동안 불이 붙습니다
         {_api}.getBurn({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 29000:
+        # 플레이어 위치에 번개를 떨어뜨립니다 (lightning.deal-damage로 실제 피해 여부 설정)
+        {_api}.getLightning({_player}, {_donorName}, DonationTarget.PLAYER)

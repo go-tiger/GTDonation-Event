@@ -114,6 +114,10 @@ weak-monster:
 burn:
   duration-seconds: 5
 
+lightning:
+  # true면 실제 낙뢰 피해/화재를 입히고, false면 연출(소리/이펙트)만 재생합니다.
+  deal-damage: true
+
 frostbite:
   duration-seconds: 8
   # 1초마다 입는 피해량
