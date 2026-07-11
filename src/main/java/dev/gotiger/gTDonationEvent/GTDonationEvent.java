@@ -11,6 +11,7 @@ import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.BreadAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
+import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
 import dev.gotiger.gTDonationEvent.action.heal.AbsorptionAction;
 import dev.gotiger.gTDonationEvent.action.heal.SuperHealAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
@@ -75,7 +76,8 @@ public final class GTDonationEvent extends JavaPlugin {
         InventorySaveManager inventorySaveManager = new InventorySaveManager(this);
         DiamondZoneManager diamondZoneManager = new DiamondZoneManager(this);
         MonsterScanManager monsterScanManager = new MonsterScanManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager);
+        FrostbiteManager frostbiteManager = new FrostbiteManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),

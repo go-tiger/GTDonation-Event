@@ -6,6 +6,7 @@ import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
+import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
@@ -41,8 +42,9 @@ public class DonationScriptAPI {
     private final InventorySaveManager inventorySaveManager;
     private final DiamondZoneManager diamondZoneManager;
     private final MonsterScanManager monsterScanManager;
+    private final FrostbiteManager frostbiteManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -56,6 +58,20 @@ public class DonationScriptAPI {
         this.inventorySaveManager = inventorySaveManager;
         this.diamondZoneManager = diamondZoneManager;
         this.monsterScanManager = monsterScanManager;
+        this.frostbiteManager = frostbiteManager;
+    }
+
+    public void getFrostbite(Player player, String donorName) {
+        getFrostbite(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getFrostbite(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            frostbiteManager.apply(recipient);
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 동상 발동"
+            );
+        }
     }
 
     public void getMonsterScan(Player player, String donorName) {

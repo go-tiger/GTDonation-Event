@@ -111,6 +111,11 @@ weak-monster:
     - SILVERFISH
     - CAVE_SPIDER
 
+frostbite:
+  duration-seconds: 8
+  # 1초마다 입는 피해량
+  damage-per-tick: 1.0
+
 medium-monster:
   radius: 4
   # 랜덤 소환 후보로 사용할 중급 몬스터 EntityType 목록입니다.
