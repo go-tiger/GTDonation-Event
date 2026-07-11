@@ -5,6 +5,12 @@ script-mode: true
 chat-shooting:
   fireball-chance: 0.2
 
+chat-raid:
+  # 참여 가능한 최대 인원수(약탈자 최대 소환 마리 수)
+  max-participants: 10
+  # 참여자가 소환되는 플레이어 주변 반경(칸)
+  spawn-radius: 10
+
 exp-bottle:
   min-count: 3
   max-count: 8

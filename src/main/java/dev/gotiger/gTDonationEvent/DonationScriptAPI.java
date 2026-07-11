@@ -7,6 +7,7 @@ import dev.gotiger.gTDonationEvent.action.buff.BuffNameKo;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.buff.RandomDebuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
+import dev.gotiger.gTDonationEvent.action.chat.raid.ChatRaidManager;
 import dev.gotiger.gTDonationEvent.action.diamondcurse.DiamondCurseManager;
 import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
 import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
@@ -60,8 +61,9 @@ public class DonationScriptAPI {
     private final RandomTeleportManager randomTeleportManager;
     private final FanMeetingManager fanMeetingManager;
     private final DiamondCurseManager diamondCurseManager;
+    private final ChatRaidManager chatRaidManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager, DiamondCurseManager diamondCurseManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager, DiamondCurseManager diamondCurseManager, ChatRaidManager chatRaidManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -83,6 +85,15 @@ public class DonationScriptAPI {
         this.randomTeleportManager = randomTeleportManager;
         this.fanMeetingManager = fanMeetingManager;
         this.diamondCurseManager = diamondCurseManager;
+        this.chatRaidManager = chatRaidManager;
+    }
+
+    public void getChatRaid(Player player, int seconds) {
+        chatRaidManager.start(player, seconds, DonationTarget.PLAYER);
+    }
+
+    public void getChatRaid(Player player, int seconds, DonationTarget target) {
+        chatRaidManager.start(player, seconds, target);
     }
 
     public void getDiamondCurse(Player player, String donorName) {
