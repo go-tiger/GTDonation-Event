@@ -23,6 +23,7 @@ import dev.gotiger.gTDonationEvent.action.knockback.KnockbackAction;
 import dev.gotiger.gTDonationEvent.action.lock.SlotLockManager;
 import dev.gotiger.gTDonationEvent.action.knockback.PokeAction;
 import dev.gotiger.gTDonationEvent.action.lightning.LightningAction;
+import dev.gotiger.gTDonationEvent.action.miningcurse.MiningCurseManager;
 import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
@@ -93,7 +94,8 @@ public final class GTDonationEvent extends JavaPlugin {
         RandomScaleManager randomScaleManager = new RandomScaleManager(this);
         WaterPrisonManager waterPrisonManager = new WaterPrisonManager(this);
         SlotLockManager slotLockManager = new SlotLockManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager);
+        MiningCurseManager miningCurseManager = new MiningCurseManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -108,6 +110,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(inventorySaveManager, this);
         getServer().getPluginManager().registerEvents(waterPrisonManager, this);
         getServer().getPluginManager().registerEvents(slotLockManager, this);
+        getServer().getPluginManager().registerEvents(miningCurseManager, this);
 
         getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
     }

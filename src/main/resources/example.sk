@@ -169,3 +169,7 @@ on DonationEvent:
     if {_amount} = 35000:
         # 빈 인벤토리 슬롯 하나를 slot-lock.duration-seconds 동안 사용 불가로 잠급니다
         {_api}.getSlotLock({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 36000:
+        # mining-curse.duration-seconds 동안 광석을 캘 때마다 몬스터 소환 또는 디버프가 발동됩니다
+        {_api}.getMiningCurse({_player}, {_donorName}, DonationTarget.PLAYER)
