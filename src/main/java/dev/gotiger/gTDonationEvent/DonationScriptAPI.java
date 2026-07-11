@@ -5,6 +5,7 @@ import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.BuffMessageSender;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
+import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
@@ -34,8 +35,9 @@ public class DonationScriptAPI {
     private final SoulOutManager soulOutManager;
     private final DevilPickaxeManager devilPickaxeManager;
     private final InventorySaveManager inventorySaveManager;
+    private final DiamondZoneManager diamondZoneManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager) {
+    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager) {
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -47,6 +49,23 @@ public class DonationScriptAPI {
         this.soulOutManager = soulOutManager;
         this.devilPickaxeManager = devilPickaxeManager;
         this.inventorySaveManager = inventorySaveManager;
+        this.diamondZoneManager = diamondZoneManager;
+    }
+
+    public void getDiamondZone(Player player, String donorName) {
+        getDiamondZone(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getDiamondZone(Player player, String donorName, DonationTarget target) {
+        for (Player recipient : target.resolve(player)) {
+            int convertedCount = diamondZoneManager.convert(recipient);
+            if (convertedCount == 0) {
+                continue;
+            }
+            recipient.getServer().broadcastMessage(
+                    ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님 주변이 다이아존으로 변했습니다!"
+            );
+        }
     }
 
     public void getInventorySave(Player player, String donorName) {

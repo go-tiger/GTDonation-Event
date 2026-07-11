@@ -88,6 +88,12 @@ soul-out:
 devil-pickaxe:
   use-count: 20
 
+diamond-zone:
+  radius: 5
+  duration-seconds: 30
+  # 반경 내 고체 블록 중 다이아몬드 원석으로 변환될 확률 (0.0~1.0)
+  convert-chance: 0.75
+
 random-animal:
   radius: 1
   # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.

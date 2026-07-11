@@ -97,3 +97,8 @@ on DonationEvent:
         # 인벤토리 세이브권 지급. 인벤토리에 가지고 있기만 하면 사망 시 자동으로 발동되어
         # 아이템/경험치 드롭을 막고(유지), 세이브권 1개만 소모됩니다
         {_api}.getInventorySave({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 19000:
+        # 플레이어 주변(diamond-zone.radius) 블록을 diamond-zone.convert-chance 확률로 다이아몬드 원석으로 바꿉니다.
+        # diamond-zone.duration-seconds 후 원래 블록으로 자동 복구됩니다
+        {_api}.getDiamondZone({_player}, {_donorName}, DonationTarget.PLAYER)
