@@ -10,6 +10,7 @@ import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
 import dev.gotiger.gTDonationEvent.action.chat.mining.ChatMiningManager;
 import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.BreadAction;
+import dev.gotiger.gTDonationEvent.action.firework.FireworkAction;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.food.SteakAction;
 import dev.gotiger.gTDonationEvent.action.frostbite.FrostbiteManager;
@@ -69,6 +70,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new BurnAction(this));
         actionRegistry.register(new LightningAction(this));
         actionRegistry.register(new TntAction(this));
+        actionRegistry.register(new FireworkAction(this));
 
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);

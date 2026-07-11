@@ -456,6 +456,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getFirework(Player player, String donorName) {
+        getFirework(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getFirework(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("FIREWORK").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 폭죽 발사"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }

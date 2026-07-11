@@ -147,3 +147,7 @@ on DonationEvent:
     if {_amount} = 30000:
         # 플레이어 위치에 활성화된(도화선이 이미 붙은) TNT를 소환합니다 (tnt.fuse-ticks 후 폭발)
         {_api}.getTnt({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 31000:
+        # 플레이어 위치에서 랜덤 색상/모양의 폭죽을 firework.count개 즉시 터뜨립니다
+        {_api}.getFirework({_player}, {_donorName}, DonationTarget.PLAYER)
