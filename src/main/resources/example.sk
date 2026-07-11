@@ -122,3 +122,7 @@ on DonationEvent:
     if {_amount} = 24000:
         # 플레이어를 랜덤 방향으로 강하게 넉백(knockback.strength/upward로 세기 조절)
         {_api}.getKnockback({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 25000:
+        # weak-monster.candidates 중 하나를 플레이어 주변(weak-monster.radius)에 랜덤 소환
+        {_api}.getWeakMonster({_player}, {_donorName}, DonationTarget.PLAYER)

@@ -99,6 +99,18 @@ random-animal:
   # org.bukkit.entity.Animals를 구현하는 동물 EntityType 중 아래 목록에 없는 것만 랜덤 소환 후보가 됩니다.
   exclude-entities: []
 
+weak-monster:
+  radius: 3
+  # 랜덤 소환 후보로 사용할 하급 몬스터 EntityType 목록입니다.
+  candidates:
+    - ZOMBIE
+    - SKELETON
+    - SPIDER
+    - HUSK
+    - DROWNED
+    - SILVERFISH
+    - CAVE_SPIDER
+
 random-item:
   # 랜덤 지급 후보에서 제외할 아이템 목록입니다.
   exclude-items:

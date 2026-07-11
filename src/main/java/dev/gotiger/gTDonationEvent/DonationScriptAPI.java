@@ -12,6 +12,7 @@ import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
+import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
@@ -352,6 +353,24 @@ public class DonationScriptAPI {
                 action.execute(recipient, 0);
                 recipient.getServer().broadcastMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 깡! 발동"
+                );
+            }
+        });
+    }
+
+    public void getWeakMonster(Player player, String donorName) {
+        getWeakMonster(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getWeakMonster(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("WEAK_MONSTER").ifPresent(action -> {
+            WeakMonsterAction weakMonsterAction = (WeakMonsterAction) action;
+            for (Player recipient : target.resolve(player)) {
+                if (weakMonsterAction.spawnMonster(recipient) == null) {
+                    continue;
+                }
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 하급 몬스터를 소환"
                 );
             }
         });
