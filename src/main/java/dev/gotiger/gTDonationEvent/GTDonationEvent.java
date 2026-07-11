@@ -5,6 +5,7 @@ import dev.gotiger.gTDonationEvent.action.animal.RandomAnimalAction;
 import dev.gotiger.gTDonationEvent.action.buff.RandomBuffAction;
 import dev.gotiger.gTDonationEvent.action.buff.RandomDebuffAction;
 import dev.gotiger.gTDonationEvent.action.burn.BurnAction;
+import dev.gotiger.gTDonationEvent.action.diamondcurse.DiamondCurseManager;
 import dev.gotiger.gTDonationEvent.action.diamondzone.DiamondZoneManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantFairyManager;
 import dev.gotiger.gTDonationEvent.action.enchant.EnchantScrollManager;
@@ -105,7 +106,8 @@ public final class GTDonationEvent extends JavaPlugin {
         MiningCurseManager miningCurseManager = new MiningCurseManager(this);
         RandomTeleportManager randomTeleportManager = new RandomTeleportManager(this);
         FanMeetingManager fanMeetingManager = new FanMeetingManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager);
+        DiamondCurseManager diamondCurseManager = new DiamondCurseManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -121,6 +123,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(waterPrisonManager, this);
         getServer().getPluginManager().registerEvents(slotLockManager, this);
         getServer().getPluginManager().registerEvents(miningCurseManager, this);
+        getServer().getPluginManager().registerEvents(diamondCurseManager, this);
 
         getCommand("gtdonationevent").setExecutor(new DebugCommand(this));
     }

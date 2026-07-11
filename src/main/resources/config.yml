@@ -172,6 +172,12 @@ frostbite:
   # 1초마다 입는 피해량
   damage-per-tick: 1.0
 
+diamond-curse:
+  duration-seconds: 60
+  # 저주 상태에서 다이아몬드를 캘 때마다 발동하는 디버프의 지속시간(초)
+  debuff-duration-seconds: 10
+  # 디버프 후보 목록은 mining-curse.debuff-candidates를 그대로 사용합니다.
+
 mining-curse:
   duration-seconds: 60
   # 저주 상태에서 광석을 캘 때마다 발동하는 디버프의 지속시간(초)
