@@ -12,6 +12,7 @@ import dev.gotiger.gTDonationEvent.action.chat.shooting.ChatShootingManager;
 import dev.gotiger.gTDonationEvent.action.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
+import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
@@ -371,6 +372,24 @@ public class DonationScriptAPI {
                 }
                 recipient.getServer().broadcastMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 하급 몬스터를 소환"
+                );
+            }
+        });
+    }
+
+    public void getMediumMonster(Player player, String donorName) {
+        getMediumMonster(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getMediumMonster(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("MEDIUM_MONSTER").ifPresent(action -> {
+            MediumMonsterAction mediumMonsterAction = (MediumMonsterAction) action;
+            for (Player recipient : target.resolve(player)) {
+                if (mediumMonsterAction.spawnMonster(recipient) == null) {
+                    continue;
+                }
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 중급 몬스터를 소환"
                 );
             }
         });
