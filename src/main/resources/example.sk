@@ -151,3 +151,7 @@ on DonationEvent:
     if {_amount} = 31000:
         # 플레이어 위치에서 랜덤 색상/모양의 폭죽을 firework.count개 즉시 터뜨립니다
         {_api}.getFirework({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 32000:
+        # 플레이어를 랜덤 방향으로 살짝 넉백(깡과 달리 높이 변화 없음, poke.strength로 세기 조절)
+        {_api}.getPoke({_player}, {_donorName}, DonationTarget.PLAYER)

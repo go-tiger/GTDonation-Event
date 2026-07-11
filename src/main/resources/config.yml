@@ -127,6 +127,10 @@ firework:
   # 폭죽 크기(터지는 반경)
   power: 1
 
+poke:
+  # 랜덤 방향으로 밀려나는 수평 힘 (높이 변화 없음)
+  strength: 1.0
+
 frostbite:
   duration-seconds: 8
   # 1초마다 입는 피해량

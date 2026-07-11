@@ -20,6 +20,7 @@ import dev.gotiger.gTDonationEvent.action.inventorysave.InventorySaveManager;
 import dev.gotiger.gTDonationEvent.action.item.RandomItemAction;
 import dev.gotiger.gTDonationEvent.action.item.TotemAction;
 import dev.gotiger.gTDonationEvent.action.knockback.KnockbackAction;
+import dev.gotiger.gTDonationEvent.action.knockback.PokeAction;
 import dev.gotiger.gTDonationEvent.action.lightning.LightningAction;
 import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
@@ -71,6 +72,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new LightningAction(this));
         actionRegistry.register(new TntAction(this));
         actionRegistry.register(new FireworkAction(this));
+        actionRegistry.register(new PokeAction(this));
 
         ChatMiningManager chatMiningManager = new ChatMiningManager(this);
         ChatShootingManager chatShootingManager = new ChatShootingManager(this);

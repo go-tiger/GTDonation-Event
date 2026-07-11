@@ -471,6 +471,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getPoke(Player player, String donorName) {
+        getPoke(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getPoke(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("POKE").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 딱콩 발동"
+                );
+            }
+        });
+    }
+
     public void getRandomItem(Player player, String donorName) {
         getRandomItem(player, donorName, DonationTarget.PLAYER);
     }
