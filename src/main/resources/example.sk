@@ -118,3 +118,7 @@ on DonationEvent:
     if {_amount} = 23000:
         # absorption.hearts 만큼의 추가 체력(노란 하트)을 absorption.duration-seconds 동안 지급
         {_api}.getAbsorption({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 24000:
+        # 플레이어를 랜덤 방향으로 강하게 넉백(knockback.strength/upward로 세기 조절)
+        {_api}.getKnockback({_player}, {_donorName}, DonationTarget.PLAYER)

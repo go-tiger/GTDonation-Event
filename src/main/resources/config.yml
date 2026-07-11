@@ -126,6 +126,12 @@ absorption:
   # 지급할 추가 체력(하트 단위, 1하트 = 체력 2)
   hearts: 4
 
+knockback:
+  # 랜덤 방향으로 밀려나는 수평 힘
+  strength: 2.0
+  # 위로 튀어오르는 힘
+  upward: 1.2
+
 events:
   1000:
     action: BREAD
