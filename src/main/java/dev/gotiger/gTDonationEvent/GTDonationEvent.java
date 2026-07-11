@@ -26,6 +26,7 @@ import dev.gotiger.gTDonationEvent.action.monster.MediumMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monster.WeakMonsterAction;
 import dev.gotiger.gTDonationEvent.action.monsterscan.MonsterScanManager;
 import dev.gotiger.gTDonationEvent.action.pickaxe.DevilPickaxeManager;
+import dev.gotiger.gTDonationEvent.action.scale.RandomScaleManager;
 import dev.gotiger.gTDonationEvent.action.scarecrow.ScarecrowManager;
 import dev.gotiger.gTDonationEvent.action.soulout.SoulOutManager;
 import dev.gotiger.gTDonationEvent.action.special.SpecialItemManager;
@@ -87,7 +88,8 @@ public final class GTDonationEvent extends JavaPlugin {
         DiamondZoneManager diamondZoneManager = new DiamondZoneManager(this);
         MonsterScanManager monsterScanManager = new MonsterScanManager(this);
         FrostbiteManager frostbiteManager = new FrostbiteManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager);
+        RandomScaleManager randomScaleManager = new RandomScaleManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),

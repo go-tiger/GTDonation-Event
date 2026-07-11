@@ -131,6 +131,12 @@ poke:
   # 랜덤 방향으로 밀려나는 수평 힘 (높이 변화 없음)
   strength: 1.0
 
+random-scale:
+  # 서버가 1.20.5 이상(GENERIC_SCALE 속성 지원)일 때만 동작합니다.
+  duration-seconds: 30
+  min-scale: 0.5
+  max-scale: 2.0
+
 frostbite:
   duration-seconds: 8
   # 1초마다 입는 피해량

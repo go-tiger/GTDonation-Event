@@ -155,3 +155,8 @@ on DonationEvent:
     if {_amount} = 32000:
         # 플레이어를 랜덤 방향으로 살짝 넉백(깡과 달리 높이 변화 없음, poke.strength로 세기 조절)
         {_api}.getPoke({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 33000:
+        # 플레이어 크기를 random-scale.min-scale~max-scale 사이 랜덤 값으로 random-scale.duration-seconds 동안 변경
+        # (서버가 1.20.5 이상이어야 동작합니다)
+        {_api}.getRandomScale({_player}, {_donorName}, DonationTarget.PLAYER)
