@@ -102,3 +102,7 @@ on DonationEvent:
         # 플레이어 주변(diamond-zone.radius) 블록을 diamond-zone.convert-chance 확률로 다이아몬드 원석으로 바꿉니다.
         # diamond-zone.duration-seconds 후 원래 블록으로 자동 복구됩니다
         {_api}.getDiamondZone({_player}, {_donorName}, DonationTarget.PLAYER)
+
+    if {_amount} = 20000:
+        # 체력, 배고픔, 상태 이상 효과를 전체 회복시킵니다
+        {_api}.getSuperHeal({_player}, {_donorName}, DonationTarget.PLAYER)

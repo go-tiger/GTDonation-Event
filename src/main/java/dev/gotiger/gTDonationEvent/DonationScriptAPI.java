@@ -292,6 +292,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getSuperHeal(Player player, String donorName) {
+        getSuperHeal(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getSuperHeal(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("SUPER_HEAL").ifPresent(action -> {
+            for (Player recipient : target.resolve(player)) {
+                action.execute(recipient, 0);
+                recipient.getServer().broadcastMessage(
+                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 슈퍼 회복 지급"
+                );
+            }
+        });
+    }
+
     private void run(String actionName, Player player, int amount, DonationTarget target) {
         actionRegistry.get(actionName).ifPresent(action -> action.applyTo(player, amount, target));
     }
