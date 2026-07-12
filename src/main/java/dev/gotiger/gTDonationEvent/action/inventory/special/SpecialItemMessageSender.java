@@ -63,7 +63,7 @@ public final class SpecialItemMessageSender {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("donor", donorName);
         placeholders.put("item", ItemNameKo.of(material));
-        recipient.sendMessage(messages.get("special-item.result-legacy", placeholders));
+        recipient.sendMessage(messages.get("special-item.result", placeholders));
     }
 
     private static void sendPaperMessage(Player recipient, String donorName, Material material) throws ReflectiveOperationException {

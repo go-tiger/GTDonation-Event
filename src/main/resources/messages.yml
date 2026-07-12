@@ -74,7 +74,7 @@ enchant-scroll:
 
 special-item:
   spin-start: "&b[후원] &f%donor%&7님이 특별한 아이템 룰렛!"
-  result-legacy: "&b[후원] &f%donor%&7님의 룰렛 결과: &6%item%&7 획득!"
+  result: "&b[후원] &f%donor%&7님의 룰렛 결과: &6%item%&7 획득!"
 
 scarecrow:
   msg: "&b[후원] &f%donor%&7님이 음식 허수아비를 소환"
@@ -143,4 +143,4 @@ random-item:
   msg: "&b[후원] &f%donor%&7님이 랜덤 아이템 &e%item%&7 지급"
 
 random-buff:
-  applied-legacy: "&b[후원] &f%donor%&7님이 &d%effect%&7 버프를 지급"
+  msg: "&b[후원] &f%donor%&7님이 &d%effect%&7 버프를 지급"

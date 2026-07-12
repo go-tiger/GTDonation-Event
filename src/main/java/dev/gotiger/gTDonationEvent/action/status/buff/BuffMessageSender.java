@@ -65,7 +65,7 @@ public final class BuffMessageSender {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("donor", donorName);
         placeholders.put("effect", BuffNameKo.of(effectType));
-        recipient.sendMessage(messages.get("random-buff.applied-legacy", placeholders));
+        recipient.sendMessage(messages.get("random-buff.msg", placeholders));
     }
 
     private static void sendPaperMessage(Player recipient, String donorName, PotionEffectType effectType) throws ReflectiveOperationException {
