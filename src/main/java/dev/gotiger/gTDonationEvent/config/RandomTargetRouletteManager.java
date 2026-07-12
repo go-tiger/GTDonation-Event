@@ -17,6 +17,11 @@ import java.util.function.Consumer;
  */
 public class RandomTargetRouletteManager {
 
+    // 스핀 횟수(11회), 매 스핀 사이 2틱 대기
+    private static final int SPIN_COUNT = 11;
+    private static final long TICKS_BETWEEN_SPINS = 2L;
+    private static final long TICKS_AFTER_WINNER = 30L;
+
     private final JavaPlugin plugin;
     private final Random random = new Random();
 
@@ -51,43 +56,58 @@ public class RandomTargetRouletteManager {
             return;
         }
 
-        int spinCount = plugin.getConfig().getInt("random-roulette.spin-count", 20);
-        long intervalTicks = plugin.getConfig().getLong("random-roulette.interval-ticks", 3L);
-
         new BukkitRunnable() {
-            int remaining = spinCount;
+            int step = 0;
+            long ticksUntilNextSpin = 0;
+            long ticksUntilFinish = -1;
 
             @Override
             public void run() {
-                if (remaining <= 0) {
+                if (ticksUntilFinish >= 0) {
+                    if (ticksUntilFinish == 0) {
+                        onFinished.run();
+                        cancel();
+                        return;
+                    }
+                    ticksUntilFinish--;
+                    return;
+                }
+
+                if (ticksUntilNextSpin > 0) {
+                    ticksUntilNextSpin--;
+                    return;
+                }
+
+                if (step >= SPIN_COUNT) {
                     announceWinner(online, winner);
-                    onFinished.run();
-                    cancel();
+                    ticksUntilFinish = TICKS_AFTER_WINNER;
                     return;
                 }
 
                 Player shown = online.get(random.nextInt(online.size()));
-                broadcastTitle(online, ChatColor.YELLOW + "" + ChatColor.BOLD + shown.getName(), ChatColor.GRAY + "룰렛 진행 중...");
-                broadcastSound(online, Sound.UI_BUTTON_CLICK);
-                remaining--;
+                broadcastTitle(online, ChatColor.YELLOW + "[대상 추첨]", ChatColor.WHITE + shown.getName());
+                broadcastSound(online, Sound.UI_BUTTON_CLICK, 1f, 1.5f);
+
+                ticksUntilNextSpin = TICKS_BETWEEN_SPINS;
+                step++;
             }
-        }.runTaskTimer(plugin, 0L, intervalTicks);
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     private void announceWinner(List<Player> online, Player winner) {
-        broadcastTitle(online, ChatColor.GOLD + "" + ChatColor.BOLD + winner.getName(), ChatColor.GREEN + "당첨!");
-        broadcastSound(online, Sound.ENTITY_PLAYER_LEVELUP);
+        broadcastTitle(online, ChatColor.GREEN + "[대상 추첨]", ChatColor.WHITE + "당첨: " + winner.getName());
+        broadcastSound(online, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
     }
 
     private void broadcastTitle(List<Player> online, String title, String subtitle) {
         for (Player player : online) {
-            player.sendTitle(title, subtitle, 0, 8, 0);
+            player.sendTitle(title, subtitle, 0, 20, 0);
         }
     }
 
-    private void broadcastSound(List<Player> online, Sound sound) {
+    private void broadcastSound(List<Player> online, Sound sound, float volume, float pitch) {
         for (Player player : online) {
-            player.playSound(player.getLocation(), sound, 1f, 1f);
+            player.playSound(player.getLocation(), sound, volume, pitch);
         }
     }
 }

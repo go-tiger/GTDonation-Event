@@ -10,12 +10,18 @@
 # 아래 항목들은 action 패키지의 카테고리(status/movement/hazard/inventory/mob/chat/misc)
 # 순서로 정리되어 있으며, 금액은 위에서부터 1000원 단위로 순차 부여했습니다.
 #
-# DonationTarget (각 getXxx 메서드의 마지막 인자로 넘기는 대상 지정 값)
-#   PLAYER - 후원한 플레이어 본인에게만 적용
-#   RANDOM - 현재 접속 중인 플레이어 중 한 명을 무작위로 선택해 적용
-#   ALL    - 현재 접속 중인 모든 플레이어에게 적용
+# DonationTarget (각 getXxx 메서드의 마지막 인자로 넘기는 대상 지정 값, 생략 시 PLAYER)
+#   PLAYER - 후원한 플레이어 본인에게만 즉시 적용
+#   RANDOM - 접속 중인 플레이어 중 한 명을 무작위로 선택해 적용.
+#            선택 전에 서버 전체 플레이어에게 "[대상 추첨]" 룰렛 타이틀 연출이 자동으로
+#            재생됩니다(이름 순환 11회, 클릭 효과음 → 당첨자 발표, 레벨업 효과음 → 1.5초 대기
+#            후 실제 액션 적용). 스크립트에서 별도로 룰렛을 구현할 필요가 없습니다.
+#   ALL    - 접속 중인 모든 플레이어에게 연출 없이 즉시 적용
 # RANDOM/ALL은 targets.yml의 제외 규칙(관전자 모드, OP, /gtdonationevent ignore로
 # 등록한 플레이어)이 자동으로 적용되어 대상에서 빠집니다. PLAYER는 영향받지 않습니다.
+#
+# 예) 랜덤 플레이어에게 넉백 적용(룰렛 연출 자동 재생):
+#   {_api}.getKnockback({_player}, {_donorName}, DonationTarget.RANDOM)
 
 import:
     dev.gotiger.gTDonationCore.event.DonationEvent
