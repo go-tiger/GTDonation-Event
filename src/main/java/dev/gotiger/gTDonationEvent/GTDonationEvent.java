@@ -51,6 +51,8 @@ import dev.gotiger.gTDonationEvent.action.misc.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.DebugCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
+import dev.gotiger.gTDonationEvent.config.DonationTarget;
+import dev.gotiger.gTDonationEvent.config.TargetExclusionConfig;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
 import dev.gotiger.gTDonationEvent.message.MessageService;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,6 +60,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class GTDonationEvent extends JavaPlugin {
 
     private DonationConfig donationConfig;
+    private TargetExclusionConfig targetExclusionConfig;
     private DonationActionRegistry actionRegistry;
     private DonationScriptAPI scriptAPI;
     private boolean scriptMode;
@@ -72,6 +75,9 @@ public final class GTDonationEvent extends JavaPlugin {
 
         donationConfig = new DonationConfig();
         donationConfig.load(getConfig());
+
+        targetExclusionConfig = new TargetExclusionConfig(this);
+        DonationTarget.configure(targetExclusionConfig);
 
         actionRegistry = new DonationActionRegistry();
         actionRegistry.register(new BreadAction());
@@ -145,7 +151,7 @@ public final class GTDonationEvent extends JavaPlugin {
         getServer().getPluginManager().registerEvents(miningCurseManager, this);
         getServer().getPluginManager().registerEvents(diamondCurseManager, this);
 
-        getCommand("gtdonationevent").setExecutor(new DebugCommand(this, messageService, donationConfig));
+        getCommand("gtdonationevent").setExecutor(new DebugCommand(this, messageService, donationConfig, targetExclusionConfig));
     }
 
     public boolean isScriptMode() {
