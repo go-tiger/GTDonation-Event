@@ -1,10 +1,12 @@
 package dev.gotiger.gTDonationEvent.action.status.buff;
 
-import org.bukkit.ChatColor;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class BuffMessageSender {
 
@@ -50,7 +52,7 @@ public final class BuffMessageSender {
     private BuffMessageSender() {
     }
 
-    public static void sendBuffMessage(Player recipient, String donorName, PotionEffectType effectType) {
+    public static void sendBuffMessage(Player recipient, String donorName, PotionEffectType effectType, MessageService messages) {
         if (PAPER_AVAILABLE) {
             try {
                 sendPaperMessage(recipient, donorName, effectType);
@@ -60,10 +62,10 @@ public final class BuffMessageSender {
             }
         }
 
-        recipient.sendMessage(
-                ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 "
-                        + ChatColor.LIGHT_PURPLE + BuffNameKo.of(effectType) + ChatColor.GRAY + " 버프를 지급"
-        );
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("donor", donorName);
+        placeholders.put("effect", BuffNameKo.of(effectType));
+        recipient.sendMessage(messages.get("random-buff.applied-legacy", placeholders));
     }
 
     private static void sendPaperMessage(Player recipient, String donorName, PotionEffectType effectType) throws ReflectiveOperationException {

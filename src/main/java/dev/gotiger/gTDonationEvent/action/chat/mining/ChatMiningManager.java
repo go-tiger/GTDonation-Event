@@ -2,13 +2,14 @@ package dev.gotiger.gTDonationEvent.action.chat.mining;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
-import org.bukkit.ChatColor;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,11 +17,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatMiningManager implements Listener {
 
     private final Plugin plugin;
+    private final MessageService messages;
     private final BlockMiner blockMiner = new BlockMiner();
     private final Map<UUID, ChatMiningSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatMiningManager(Plugin plugin) {
+    public ChatMiningManager(Plugin plugin, MessageService messages) {
         this.plugin = plugin;
+        this.messages = messages;
     }
 
     public void start(Player donor, int seconds, String word1, String word2, int radius, DonationTarget target) {
@@ -78,10 +81,10 @@ public class ChatMiningManager implements Listener {
         if (triggeredBy != null) {
             int minedCount = blockMiner.mineAround(watched, session.getRadius());
             int totalMinedCount = session.addMinedCount(minedCount);
-            watched.sendMessage(
-                    ChatColor.GREEN + triggeredBy + ChatColor.WHITE + "님이 블록 채굴! (총 "
-                            + ChatColor.YELLOW + totalMinedCount + "개" + ChatColor.WHITE + ")"
-            );
+            Map<String, String> placeholders = new HashMap<>();
+            placeholders.put("chatter", triggeredBy);
+            placeholders.put("count", String.valueOf(totalMinedCount));
+            watched.sendMessage(messages.get("chat-mining.broadcast", placeholders));
         }
     }
 }

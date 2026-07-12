@@ -36,17 +36,21 @@ import dev.gotiger.gTDonationEvent.action.movement.waterprison.WaterPrisonManage
 import dev.gotiger.gTDonationEvent.action.movement.teleport.RandomTeleportManager;
 import dev.gotiger.gTDonationEvent.action.misc.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import dev.gotiger.gTDonationEvent.config.RandomTargetRouletteManager;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DonationScriptAPI {
 
     private final JavaPlugin plugin;
+    private final MessageService messages;
     private final DonationActionRegistry actionRegistry;
     private final ChatMiningManager chatMiningManager;
     private final ChatShootingManager chatShootingManager;
@@ -73,8 +77,9 @@ public class DonationScriptAPI {
     private final ChatPunchManager chatPunchManager;
     private final RandomTargetRouletteManager rouletteManager;
 
-    public DonationScriptAPI(JavaPlugin plugin, DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager, DiamondCurseManager diamondCurseManager, ChatRaidManager chatRaidManager, ChatRushManager chatRushManager, ChatPunchManager chatPunchManager, RandomTargetRouletteManager rouletteManager) {
+    public DonationScriptAPI(JavaPlugin plugin, MessageService messages, DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager, DiamondCurseManager diamondCurseManager, ChatRaidManager chatRaidManager, ChatRushManager chatRushManager, ChatPunchManager chatPunchManager, RandomTargetRouletteManager rouletteManager) {
         this.plugin = plugin;
+        this.messages = messages;
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -129,6 +134,12 @@ public class DonationScriptAPI {
                 && plugin.getConfig().getBoolean("random-action-same-result-for-all", true);
     }
 
+    private Map<String, String> donorPlaceholder(String donorName) {
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("donor", donorName);
+        return placeholders;
+    }
+
     public void getChatPunch(Player player, int seconds) {
         chatPunchManager.start(player, seconds, DonationTarget.PLAYER);
     }
@@ -163,9 +174,7 @@ public class DonationScriptAPI {
                 if (!diamondCurseManager.curse(recipient)) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 다이아의 저주 발동"
-                );
+                recipient.sendMessage(messages.get("diamond-curse.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -178,9 +187,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 fanMeetingManager.summon(recipient, donorName);
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 팬미팅!"
-                );
+                recipient.sendMessage(messages.get("fan-meeting.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -193,9 +200,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 randomTeleportManager.teleport(recipient);
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 랜덤 순간이동 발동"
-                );
+                recipient.sendMessage(messages.get("random-teleport.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -210,9 +215,7 @@ public class DonationScriptAPI {
                 if (!miningCurseManager.curse(recipient)) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 광질 저주 발동"
-                );
+                recipient.sendMessage(messages.get("mining-curse.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -227,9 +230,7 @@ public class DonationScriptAPI {
                 if (!slotLockManager.lock(recipient)) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 인벤토리 슬롯 하나가 잠김"
-                );
+                recipient.sendMessage(messages.get("slot-lock.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -244,9 +245,7 @@ public class DonationScriptAPI {
                 if (!waterPrisonManager.trap(recipient)) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 물 감옥에 갇힘"
-                );
+                recipient.sendMessage(messages.get("water-prison.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -273,9 +272,7 @@ public class DonationScriptAPI {
                 if (!applied) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 크기가 랜덤하게 변경됨"
-                );
+                recipient.sendMessage(messages.get("random-scale.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -288,9 +285,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 frostbiteManager.apply(recipient);
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 동상 발동"
-                );
+                recipient.sendMessage(messages.get("frostbite.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -306,9 +301,7 @@ public class DonationScriptAPI {
                 if (detectedCount == 0) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 몬스터 탐지 발동"
-                );
+                recipient.sendMessage(messages.get("monster-scan.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -324,9 +317,7 @@ public class DonationScriptAPI {
                 if (convertedCount == 0) {
                     continue;
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님 주변이 다이아존으로 변했습니다!"
-                );
+                recipient.sendMessage(messages.get("diamond-zone.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -342,9 +333,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 인벤토리 세이브권 지급"
-                );
+                recipient.sendMessage(messages.get("inventory-save.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -360,9 +349,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 악마의 곡괭이 지급"
-                );
+                recipient.sendMessage(messages.get("devil-pickaxe.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -378,9 +365,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 유체이탈의 부적 지급"
-                );
+                recipient.sendMessage(messages.get("soul-out.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -392,19 +377,16 @@ public class DonationScriptAPI {
     public void getEnchantFairy(Player player, String donorName, DonationTarget target) {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
-                boolean started = enchantFairyManager.enhance(recipient, (enchantment, level) ->
-                        recipient.sendMessage(
-                                ChatColor.LIGHT_PURPLE + "강화 요정이 " + ChatColor.WHITE + recipient.getName()
-                                        + ChatColor.LIGHT_PURPLE + "님의 장비를 " + ChatColor.GOLD
-                                        + enchantment.getKey().getKey() + " " + level
-                                        + ChatColor.LIGHT_PURPLE + "(으)로 강화했습니다!"
-                        )
-                );
+                boolean started = enchantFairyManager.enhance(recipient, (enchantment, level) -> {
+                    Map<String, String> placeholders = new HashMap<>();
+                    placeholders.put("recipient", recipient.getName());
+                    placeholders.put("enchant", enchantment.getKey().getKey());
+                    placeholders.put("level", String.valueOf(level));
+                    recipient.sendMessage(messages.get("enchant-fairy.enhanced", placeholders));
+                });
 
                 if (started) {
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 강화 요정이 나타났습니다!"
-                    );
+                    recipient.sendMessage(messages.get("enchant-fairy.appeared", donorPlaceholder(donorName)));
                 }
             }
         });
@@ -421,9 +403,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 즉석 인챈트권 지급"
-                );
+                recipient.sendMessage(messages.get("enchant-scroll.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -435,11 +415,9 @@ public class DonationScriptAPI {
     public void getSpecialItem(Player player, String donorName, DonationTarget target) {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 특별한 아이템 룰렛!"
-                );
+                recipient.sendMessage(messages.get("special-item.spin-start", donorPlaceholder(donorName)));
                 specialItemManager.spin(recipient, material ->
-                        SpecialItemMessageSender.sendResultMessage(recipient, donorName, material)
+                        SpecialItemMessageSender.sendResultMessage(recipient, donorName, material, messages)
                 );
             }
         });
@@ -465,9 +443,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 scarecrowManager.spawn(recipient);
-                recipient.sendMessage(
-                        ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 음식 허수아비를 소환"
-                );
+                recipient.sendMessage(messages.get("scarecrow.msg", donorPlaceholder(donorName)));
             }
         });
     }
@@ -513,9 +489,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, amount);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 불사의 토템 지급"
-                    );
+                    recipient.sendMessage(messages.get("totem.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -545,7 +519,7 @@ public class DonationScriptAPI {
                     if (effectType == null) {
                         continue;
                     }
-                    BuffMessageSender.sendBuffMessage(recipient, donorName, effectType);
+                    BuffMessageSender.sendBuffMessage(recipient, donorName, effectType, messages);
                 }
             });
         });
@@ -575,10 +549,9 @@ public class DonationScriptAPI {
                     if (effectType == null) {
                         continue;
                     }
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 "
-                                    + ChatColor.DARK_RED + BuffNameKo.of(effectType) + ChatColor.GRAY + " 디버프를 받음"
-                    );
+                    Map<String, String> placeholders = donorPlaceholder(donorName);
+                    placeholders.put("effect", BuffNameKo.of(effectType));
+                    recipient.sendMessage(messages.get("random-debuff.msg", placeholders));
                 }
             });
         });
@@ -594,10 +567,9 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     int thrownCount = expBottleAction.throwBottles(recipient);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 경험치 병 "
-                                    + ChatColor.YELLOW + thrownCount + "개" + ChatColor.GRAY + " 지급"
-                    );
+                    Map<String, String> placeholders = donorPlaceholder(donorName);
+                    placeholders.put("count", String.valueOf(thrownCount));
+                    recipient.sendMessage(messages.get("exp-bottle.msg", placeholders));
                 }
             });
         });
@@ -621,9 +593,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 동물을 소환"
-                    );
+                    recipient.sendMessage(messages.get("random-animal.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -638,9 +608,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 슈퍼 회복 지급"
-                    );
+                    recipient.sendMessage(messages.get("super-heal.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -655,9 +623,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 추가 체력 지급"
-                    );
+                    recipient.sendMessage(messages.get("absorption.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -672,9 +638,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 깡! 발동"
-                    );
+                    recipient.sendMessage(messages.get("knockback.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -698,9 +662,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 하급 몬스터를 소환"
-                    );
+                    recipient.sendMessage(messages.get("weak-monster.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -724,9 +686,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 중급 몬스터를 소환"
-                    );
+                    recipient.sendMessage(messages.get("medium-monster.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -741,9 +701,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 화상 발동"
-                    );
+                    recipient.sendMessage(messages.get("burn.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -758,9 +716,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 벼락 발동"
-                    );
+                    recipient.sendMessage(messages.get("lightning.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -775,9 +731,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 TNT를 소환"
-                    );
+                    recipient.sendMessage(messages.get("tnt.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -792,9 +746,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 폭죽 발사"
-                    );
+                    recipient.sendMessage(messages.get("firework.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -809,9 +761,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 딱콩 발동"
-                    );
+                    recipient.sendMessage(messages.get("poke.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -826,9 +776,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 시야가 강제로 변경됨"
-                    );
+                    recipient.sendMessage(messages.get("random-view.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -852,9 +800,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 상급 몬스터를 소환"
-                    );
+                    recipient.sendMessage(messages.get("strong-monster.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -869,9 +815,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 자유낙하 발동"
-                    );
+                    recipient.sendMessage(messages.get("free-fall.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -886,9 +830,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 음식이 모두 썩음"
-                    );
+                    recipient.sendMessage(messages.get("rot-food.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -903,9 +845,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 점프 발동"
-                    );
+                    recipient.sendMessage(messages.get("jump.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -920,9 +860,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 아이템 하나가 불타서 사라짐"
-                    );
+                    recipient.sendMessage(messages.get("item-remove.msg", donorPlaceholder(donorName)));
                 }
             });
         });
@@ -952,10 +890,9 @@ public class DonationScriptAPI {
                     if (material == null) {
                         continue;
                     }
-                    recipient.sendMessage(
-                            ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 랜덤 아이템 "
-                                    + ChatColor.YELLOW + material.name() + ChatColor.GRAY + " 지급"
-                    );
+                    Map<String, String> placeholders = donorPlaceholder(donorName);
+                    placeholders.put("item", material.name());
+                    recipient.sendMessage(messages.get("random-item.msg", placeholders));
                 }
             });
         });

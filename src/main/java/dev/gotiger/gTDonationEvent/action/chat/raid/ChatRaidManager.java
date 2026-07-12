@@ -2,7 +2,7 @@ package dev.gotiger.gTDonationEvent.action.chat.raid;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
-import org.bukkit.ChatColor;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -20,11 +21,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatRaidManager implements Listener {
 
     private final Plugin plugin;
+    private final MessageService messages;
     private final Random random = new Random();
     private final Map<UUID, ChatRaidSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatRaidManager(Plugin plugin) {
+    public ChatRaidManager(Plugin plugin, MessageService messages) {
         this.plugin = plugin;
+        this.messages = messages;
     }
 
     public void start(Player donor, int seconds, DonationTarget target) {
@@ -97,13 +100,14 @@ public class ChatRaidManager implements Listener {
         double offsetZ = (random.nextDouble() * 2 - 1) * radius;
         Location spawnLocation = center.clone().add(offsetX, 0, offsetZ);
 
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("chatter", chatterName);
+
         Monster pillager = (Monster) watched.getWorld().spawnEntity(spawnLocation, EntityType.PILLAGER);
-        pillager.setCustomName(ChatColor.RED + "[레이드] " + ChatColor.WHITE + chatterName);
+        pillager.setCustomName(messages.get("chat-raid.mob-name", placeholders));
         pillager.setCustomNameVisible(true);
         pillager.setTarget(watched);
 
-        watched.sendMessage(
-                ChatColor.RED + "[채팅 레이드] " + ChatColor.WHITE + chatterName + ChatColor.GRAY + "님이 약탈자로 참여했습니다!"
-        );
+        watched.sendMessage(messages.get("chat-raid.broadcast", placeholders));
     }
 }

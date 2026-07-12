@@ -1,10 +1,12 @@
 package dev.gotiger.gTDonationEvent.action.inventory.special;
 
-import org.bukkit.ChatColor;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class SpecialItemMessageSender {
 
@@ -48,7 +50,7 @@ public final class SpecialItemMessageSender {
     private SpecialItemMessageSender() {
     }
 
-    public static void sendResultMessage(Player recipient, String donorName, Material material) {
+    public static void sendResultMessage(Player recipient, String donorName, Material material, MessageService messages) {
         if (PAPER_AVAILABLE) {
             try {
                 sendPaperMessage(recipient, donorName, material);
@@ -58,10 +60,10 @@ public final class SpecialItemMessageSender {
             }
         }
 
-        recipient.sendMessage(
-                ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 룰렛 결과: "
-                        + ChatColor.GOLD + ItemNameKo.of(material) + ChatColor.GRAY + " 획득!"
-        );
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("donor", donorName);
+        placeholders.put("item", ItemNameKo.of(material));
+        recipient.sendMessage(messages.get("special-item.result-legacy", placeholders));
     }
 
     private static void sendPaperMessage(Player recipient, String donorName, Material material) throws ReflectiveOperationException {

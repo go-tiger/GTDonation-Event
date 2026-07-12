@@ -2,13 +2,14 @@ package dev.gotiger.gTDonationEvent.action.chat.shooting;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
-import org.bukkit.ChatColor;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,11 +17,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatShootingManager implements Listener {
 
     private final JavaPlugin plugin;
+    private final MessageService messages;
     private final ProjectileShooter projectileShooter = new ProjectileShooter();
     private final Map<UUID, ChatShootingSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatShootingManager(JavaPlugin plugin) {
+    public ChatShootingManager(JavaPlugin plugin, MessageService messages) {
         this.plugin = plugin;
+        this.messages = messages;
     }
 
     public void start(Player donor, int seconds, String word, DonationTarget target) {
@@ -81,10 +84,11 @@ public class ChatShootingManager implements Listener {
         double fireballChance = plugin.getConfig().getDouble("chat-shooting.fireball-chance", 0.2);
         boolean isFireball = projectileShooter.shoot(watched, event.getChatterName(), fireballChance);
         int totalShotCount = session.addShotCount(1);
-        String projectileName = isFireball ? ChatColor.GOLD + "화염구" + ChatColor.GRAY : "화살";
-        watched.sendMessage(
-                ChatColor.RED + "[채팅 사격] " + ChatColor.WHITE + event.getMessage() + ChatColor.GRAY + " " + projectileName + " 발사! ("
-                        + ChatColor.YELLOW + totalShotCount + "번째" + ChatColor.GRAY + ")"
-        );
+        String projectileName = messages.get(isFireball ? "chat-shooting.projectile-fireball" : "chat-shooting.projectile-arrow");
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("message", event.getMessage());
+        placeholders.put("projectile", projectileName);
+        placeholders.put("count", String.valueOf(totalShotCount));
+        watched.sendMessage(messages.get("chat-shooting.broadcast", placeholders));
     }
 }

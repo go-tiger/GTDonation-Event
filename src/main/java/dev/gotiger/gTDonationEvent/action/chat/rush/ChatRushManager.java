@@ -2,6 +2,7 @@ package dev.gotiger.gTDonationEvent.action.chat.rush;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -12,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -20,11 +22,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatRushManager implements Listener {
 
     private final Plugin plugin;
+    private final MessageService messages;
     private final Random random = new Random();
     private final Map<UUID, ChatRushSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatRushManager(Plugin plugin) {
+    public ChatRushManager(Plugin plugin, MessageService messages) {
         this.plugin = plugin;
+        this.messages = messages;
     }
 
     public void start(Player donor, int seconds, DonationTarget target) {
@@ -85,9 +89,11 @@ public class ChatRushManager implements Listener {
     }
 
     private void sendTitle(Player watched, ChatRushSession session) {
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("count", String.valueOf(session.getTotalSummonedCount()));
         watched.sendTitle(
-                ChatColor.GREEN + "" + ChatColor.BOLD + "좀벌레 습격 진행 중",
-                ChatColor.WHITE + "채팅으로 좀벌레를 소환하세요! (" + session.getTotalSummonedCount() + "마리)",
+                messages.get("chat-rush.title"),
+                messages.get("chat-rush.subtitle", placeholders),
                 0, 30, 10
         );
     }

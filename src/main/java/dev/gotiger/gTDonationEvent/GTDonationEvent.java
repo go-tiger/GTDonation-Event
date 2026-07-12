@@ -112,11 +112,11 @@ public final class GTDonationEvent extends JavaPlugin {
 
         MessageService messageService = new MessageService(this);
 
-        ChatMiningManager chatMiningManager = new ChatMiningManager(this);
-        ChatRaidManager chatRaidManager = new ChatRaidManager(this);
-        ChatRushManager chatRushManager = new ChatRushManager(this);
+        ChatMiningManager chatMiningManager = new ChatMiningManager(this, messageService);
+        ChatRaidManager chatRaidManager = new ChatRaidManager(this, messageService);
+        ChatRushManager chatRushManager = new ChatRushManager(this, messageService);
         ChatPunchManager chatPunchManager = new ChatPunchManager(this, messageService);
-        ChatShootingManager chatShootingManager = new ChatShootingManager(this);
+        ChatShootingManager chatShootingManager = new ChatShootingManager(this, messageService);
         ScarecrowManager scarecrowManager = new ScarecrowManager(this);
         XrayManager xrayManager = new XrayManager(this);
         SpecialItemManager specialItemManager = new SpecialItemManager(this);
@@ -136,7 +136,7 @@ public final class GTDonationEvent extends JavaPlugin {
         FanMeetingManager fanMeetingManager = new FanMeetingManager(this);
         DiamondCurseManager diamondCurseManager = new DiamondCurseManager(this);
         RandomTargetRouletteManager rouletteManager = new RandomTargetRouletteManager(this);
-        scriptAPI = new DonationScriptAPI(this, actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager, rouletteManager);
+        scriptAPI = new DonationScriptAPI(this, messageService, actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager, rouletteManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
