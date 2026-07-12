@@ -2,12 +2,6 @@ config-version: 1.0
 
 script-mode: true
 
-random-roulette:
-  # DonationTarget.RANDOM 대상 확정 시 서버 전체에 보여줄 이름 순환 횟수
-  spin-count: 20
-  # 순환 간격(틱, 20틱 = 1초)
-  interval-ticks: 3
-
 chat-shooting:
   fireball-chance: 0.2
 
@@ -286,10 +280,7 @@ knockback:
 events:
   1000:
     action: BREAD
-    target: player
   5000:
     action: BUFF
-    target: random
   10000:
     action: DEBUFF
-    target: all

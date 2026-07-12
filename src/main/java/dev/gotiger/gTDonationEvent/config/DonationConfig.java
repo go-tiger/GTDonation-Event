@@ -27,9 +27,7 @@ public class DonationConfig {
             }
 
             String action = entry.getString("action");
-            DonationTarget target = DonationTarget.valueOf(entry.getString("target").toUpperCase());
-
-            mappings.put(amount, new DonationMapping(action, target));
+            mappings.put(amount, new DonationMapping(action));
         }
     }
 

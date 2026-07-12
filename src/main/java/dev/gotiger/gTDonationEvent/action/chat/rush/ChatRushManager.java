@@ -1,7 +1,6 @@
 package dev.gotiger.gTDonationEvent.action.chat.rush;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
-import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -27,42 +26,39 @@ public class ChatRushManager implements Listener {
         this.plugin = plugin;
     }
 
-    public void start(Player donor, int seconds, DonationTarget target) {
+    public void start(Player watched, int seconds) {
         long durationMillis = seconds * 1000L;
+        UUID id = watched.getUniqueId();
 
-        for (Player watched : target.resolve(donor)) {
-            UUID id = watched.getUniqueId();
-
-            ChatRushSession previous = sessions.remove(id);
-            if (previous != null) {
-                previous.getBossBar().removeAll();
-            }
-
-            ChatRushSession session = new ChatRushSession(durationMillis);
-            sessions.put(id, session);
-            session.getBossBar().addPlayer(watched);
-            sendTitle(watched, session);
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    ChatRushSession current = sessions.get(id);
-                    if (current == null || current != session) {
-                        cancel();
-                        return;
-                    }
-
-                    if (session.isExpired()) {
-                        session.getBossBar().removeAll();
-                        sessions.remove(id, session);
-                        cancel();
-                        return;
-                    }
-
-                    session.updateBossBar();
-                }
-            }.runTaskTimer(plugin, 0L, 20L);
+        ChatRushSession previous = sessions.remove(id);
+        if (previous != null) {
+            previous.getBossBar().removeAll();
         }
+
+        ChatRushSession session = new ChatRushSession(durationMillis);
+        sessions.put(id, session);
+        session.getBossBar().addPlayer(watched);
+        sendTitle(watched, session);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                ChatRushSession current = sessions.get(id);
+                if (current == null || current != session) {
+                    cancel();
+                    return;
+                }
+
+                if (session.isExpired()) {
+                    session.getBossBar().removeAll();
+                    sessions.remove(id, session);
+                    cancel();
+                    return;
+                }
+
+                session.updateBossBar();
+            }
+        }.runTaskTimer(plugin, 0L, 20L);
     }
 
     @EventHandler

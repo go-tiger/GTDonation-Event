@@ -1,7 +1,6 @@
 package dev.gotiger.gTDonationEvent.action.chat.raid;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
-import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -27,42 +26,39 @@ public class ChatRaidManager implements Listener {
         this.plugin = plugin;
     }
 
-    public void start(Player donor, int seconds, DonationTarget target) {
+    public void start(Player watched, int seconds) {
         long durationMillis = seconds * 1000L;
         int maxParticipants = plugin.getConfig().getInt("chat-raid.max-participants", 10);
+        UUID id = watched.getUniqueId();
 
-        for (Player watched : target.resolve(donor)) {
-            UUID id = watched.getUniqueId();
-
-            ChatRaidSession previous = sessions.remove(id);
-            if (previous != null) {
-                previous.getBossBar().removeAll();
-            }
-
-            ChatRaidSession session = new ChatRaidSession(durationMillis, maxParticipants);
-            sessions.put(id, session);
-            session.getBossBar().addPlayer(watched);
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    ChatRaidSession current = sessions.get(id);
-                    if (current == null || current != session) {
-                        cancel();
-                        return;
-                    }
-
-                    if (session.isExpired()) {
-                        session.getBossBar().removeAll();
-                        sessions.remove(id, session);
-                        cancel();
-                        return;
-                    }
-
-                    session.updateBossBar();
-                }
-            }.runTaskTimer(plugin, 0L, 20L);
+        ChatRaidSession previous = sessions.remove(id);
+        if (previous != null) {
+            previous.getBossBar().removeAll();
         }
+
+        ChatRaidSession session = new ChatRaidSession(durationMillis, maxParticipants);
+        sessions.put(id, session);
+        session.getBossBar().addPlayer(watched);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                ChatRaidSession current = sessions.get(id);
+                if (current == null || current != session) {
+                    cancel();
+                    return;
+                }
+
+                if (session.isExpired()) {
+                    session.getBossBar().removeAll();
+                    sessions.remove(id, session);
+                    cancel();
+                    return;
+                }
+
+                session.updateBossBar();
+            }
+        }.runTaskTimer(plugin, 0L, 20L);
     }
 
     @EventHandler
