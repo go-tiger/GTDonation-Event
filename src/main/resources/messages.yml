@@ -137,7 +137,7 @@ jump:
   msg: "&b[후원] &f%donor%&7님이 점프 발동"
 
 item-remove:
-  msg: "&b[후원] &f%donor%&7님의 아이템 하나가 불타서 사라짐"
+  msg: "&b[후원] &f%donor%&7님의 아이템 슬롯 하나가 불타서 사라짐"
 
 random-item:
   msg: "&b[후원] &f%donor%&7님이 랜덤 아이템 &e%item%&7 지급"

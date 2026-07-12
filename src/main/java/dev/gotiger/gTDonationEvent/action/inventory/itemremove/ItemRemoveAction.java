@@ -43,16 +43,11 @@ public class ItemRemoveAction implements DonationAction {
 
         int slot = filledSlots.get(random.nextInt(filledSlots.size()));
         ItemStack item = inventory.getItem(slot);
-        ItemStack single = item.clone();
-        single.setAmount(1);
+        ItemStack whole = item.clone();
 
-        if (item.getAmount() > 1) {
-            item.setAmount(item.getAmount() - 1);
-        } else {
-            inventory.setItem(slot, null);
-        }
+        inventory.setItem(slot, null);
 
-        Item droppedItem = target.getWorld().dropItem(target.getLocation(), single);
+        Item droppedItem = target.getWorld().dropItem(target.getLocation(), whole);
         droppedItem.setFireTicks(Integer.MAX_VALUE);
         droppedItem.setPickupDelay(Integer.MAX_VALUE);
         droppedItem.setVelocity(droppedItem.getVelocity().multiply(0.2));
