@@ -38,11 +38,15 @@ import dev.gotiger.gTDonationEvent.action.misc.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import dev.gotiger.gTDonationEvent.config.RandomTargetRouletteManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
 public class DonationScriptAPI {
 
+    private final JavaPlugin plugin;
     private final DonationActionRegistry actionRegistry;
     private final ChatMiningManager chatMiningManager;
     private final ChatShootingManager chatShootingManager;
@@ -69,7 +73,8 @@ public class DonationScriptAPI {
     private final ChatPunchManager chatPunchManager;
     private final RandomTargetRouletteManager rouletteManager;
 
-    public DonationScriptAPI(DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager, DiamondCurseManager diamondCurseManager, ChatRaidManager chatRaidManager, ChatRushManager chatRushManager, ChatPunchManager chatPunchManager, RandomTargetRouletteManager rouletteManager) {
+    public DonationScriptAPI(JavaPlugin plugin, DonationActionRegistry actionRegistry, ChatMiningManager chatMiningManager, ChatShootingManager chatShootingManager, ScarecrowManager scarecrowManager, XrayManager xrayManager, SpecialItemManager specialItemManager, EnchantScrollManager enchantScrollManager, EnchantFairyManager enchantFairyManager, SoulOutManager soulOutManager, DevilPickaxeManager devilPickaxeManager, InventorySaveManager inventorySaveManager, DiamondZoneManager diamondZoneManager, MonsterScanManager monsterScanManager, FrostbiteManager frostbiteManager, RandomScaleManager randomScaleManager, WaterPrisonManager waterPrisonManager, SlotLockManager slotLockManager, MiningCurseManager miningCurseManager, RandomTeleportManager randomTeleportManager, FanMeetingManager fanMeetingManager, DiamondCurseManager diamondCurseManager, ChatRaidManager chatRaidManager, ChatRushManager chatRushManager, ChatPunchManager chatPunchManager, RandomTargetRouletteManager rouletteManager) {
+        this.plugin = plugin;
         this.actionRegistry = actionRegistry;
         this.chatMiningManager = chatMiningManager;
         this.chatShootingManager = chatShootingManager;
@@ -95,6 +100,33 @@ public class DonationScriptAPI {
         this.chatRushManager = chatRushManager;
         this.chatPunchManager = chatPunchManager;
         this.rouletteManager = rouletteManager;
+    }
+
+    /**
+     * 스크립트에서 대상을 먼저 뽑아 쓰고 싶을 때 사용. RANDOM이면 접속 중인 플레이어 중 한 명을
+     * 즉시(연출 없이) 반환하고, PLAYER/ALL은 target.resolve(donor) 규칙대로 첫 번째 대상을 반환한다.
+     * 대상이 없으면 null.
+     */
+    public Player pickTarget(Player donor, DonationTarget target) {
+        return rouletteManager.pickTarget(donor, target);
+    }
+
+    /**
+     * pickTarget으로 이미 뽑은 당첨자를 대상으로 "[대상 추첨]" 룰렛 타이틀 연출만 재생한다.
+     * 연출은 비동기로 진행되며 즉시 리턴하므로, 연출이 끝난 뒤에 실제 액션을 실행하고 싶다면
+     * 스크립트에서 연출 총 소요 시간만큼 wait 한 뒤 winner를 대상으로 액션을 실행하세요.
+     */
+    public void playRouletteEffect(Player winner) {
+        rouletteManager.playRouletteEffect(winner);
+    }
+
+    /**
+     * DonationTarget.ALL로 여러 명에게 랜덤 요소가 있는 액션을 적용할 때, config.yml의
+     * random-action-same-result-for-all이 true이면 모두 같은 결과를 받아야 하므로 true를 반환한다.
+     */
+    private boolean shouldShareResultForAll(DonationTarget target) {
+        return target == DonationTarget.ALL
+                && plugin.getConfig().getBoolean("random-action-same-result-for-all", true);
     }
 
     public void getChatPunch(Player player, int seconds) {
@@ -224,9 +256,21 @@ public class DonationScriptAPI {
     }
 
     public void getRandomScale(Player player, String donorName, DonationTarget target) {
+        boolean shareResult = shouldShareResultForAll(target);
+        Double sharedScale = null;
+        if (shareResult) {
+            double minScale = plugin.getConfig().getDouble("random-scale.min-scale", 0.5);
+            double maxScale = plugin.getConfig().getDouble("random-scale.max-scale", 2.0);
+            sharedScale = minScale + Math.random() * (maxScale - minScale);
+        }
+        Double finalSharedScale = sharedScale;
+
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
-                if (!randomScaleManager.apply(recipient)) {
+                boolean applied = shareResult
+                        ? randomScaleManager.apply(recipient, finalSharedScale)
+                        : randomScaleManager.apply(recipient);
+                if (!applied) {
                     continue;
                 }
                 recipient.getServer().broadcastMessage(
@@ -484,9 +528,20 @@ public class DonationScriptAPI {
     public void getRandomBuff(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("BUFF").ifPresent(action -> {
             RandomBuffAction randomBuffAction = (RandomBuffAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            PotionEffectType sharedEffect = shareResult ? randomBuffAction.pickRandomEffect() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    PotionEffectType effectType = randomBuffAction.applyBuff(recipient);
+                    PotionEffectType effectType = sharedEffect;
+                    if (shareResult) {
+                        if (sharedEffect == null) {
+                            continue;
+                        }
+                        randomBuffAction.applyBuff(recipient, sharedEffect);
+                    } else {
+                        effectType = randomBuffAction.applyBuff(recipient);
+                    }
                     if (effectType == null) {
                         continue;
                     }
@@ -503,9 +558,20 @@ public class DonationScriptAPI {
     public void getRandomDebuff(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("DEBUFF").ifPresent(action -> {
             RandomDebuffAction randomDebuffAction = (RandomDebuffAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            PotionEffectType sharedEffect = shareResult ? randomDebuffAction.pickRandomEffect() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    PotionEffectType effectType = randomDebuffAction.applyDebuff(recipient);
+                    PotionEffectType effectType = sharedEffect;
+                    if (shareResult) {
+                        if (sharedEffect == null) {
+                            continue;
+                        }
+                        randomDebuffAction.applyDebuff(recipient, sharedEffect);
+                    } else {
+                        effectType = randomDebuffAction.applyDebuff(recipient);
+                    }
                     if (effectType == null) {
                         continue;
                     }
@@ -544,9 +610,15 @@ public class DonationScriptAPI {
     public void getRandomAnimal(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("ANIMAL").ifPresent(action -> {
             RandomAnimalAction randomAnimalAction = (RandomAnimalAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            EntityType sharedType = shareResult ? randomAnimalAction.pickRandomEntityType() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    if (randomAnimalAction.spawnAnimal(recipient) == null) {
+                    boolean spawned = shareResult
+                            ? sharedType != null && randomAnimalAction.spawnAnimal(recipient, sharedType) != null
+                            : randomAnimalAction.spawnAnimal(recipient) != null;
+                    if (!spawned) {
                         continue;
                     }
                     recipient.getServer().broadcastMessage(
@@ -615,9 +687,15 @@ public class DonationScriptAPI {
     public void getWeakMonster(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("WEAK_MONSTER").ifPresent(action -> {
             WeakMonsterAction weakMonsterAction = (WeakMonsterAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            EntityType sharedType = shareResult ? weakMonsterAction.pickRandomEntityType() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    if (weakMonsterAction.spawnMonster(recipient) == null) {
+                    boolean spawned = shareResult
+                            ? sharedType != null && weakMonsterAction.spawnMonster(recipient, sharedType) != null
+                            : weakMonsterAction.spawnMonster(recipient) != null;
+                    if (!spawned) {
                         continue;
                     }
                     recipient.getServer().broadcastMessage(
@@ -635,9 +713,15 @@ public class DonationScriptAPI {
     public void getMediumMonster(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("MEDIUM_MONSTER").ifPresent(action -> {
             MediumMonsterAction mediumMonsterAction = (MediumMonsterAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            EntityType sharedType = shareResult ? mediumMonsterAction.pickRandomEntityType() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    if (mediumMonsterAction.spawnMonster(recipient) == null) {
+                    boolean spawned = shareResult
+                            ? sharedType != null && mediumMonsterAction.spawnMonster(recipient, sharedType) != null
+                            : mediumMonsterAction.spawnMonster(recipient) != null;
+                    if (!spawned) {
                         continue;
                     }
                     recipient.getServer().broadcastMessage(
@@ -757,9 +841,15 @@ public class DonationScriptAPI {
     public void getStrongMonster(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("STRONG_MONSTER").ifPresent(action -> {
             StrongMonsterAction strongMonsterAction = (StrongMonsterAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            EntityType sharedType = shareResult ? strongMonsterAction.pickRandomEntityType() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    if (strongMonsterAction.spawnMonster(recipient) == null) {
+                    boolean spawned = shareResult
+                            ? sharedType != null && strongMonsterAction.spawnMonster(recipient, sharedType) != null
+                            : strongMonsterAction.spawnMonster(recipient) != null;
+                    if (!spawned) {
                         continue;
                     }
                     recipient.getServer().broadcastMessage(
@@ -845,9 +935,20 @@ public class DonationScriptAPI {
     public void getRandomItem(Player player, String donorName, DonationTarget target) {
         actionRegistry.get("RANDOM_ITEM").ifPresent(action -> {
             RandomItemAction randomItemAction = (RandomItemAction) action;
+            boolean shareResult = shouldShareResultForAll(target);
+            Material sharedMaterial = shareResult ? randomItemAction.pickRandomMaterial() : null;
+
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
-                    var material = randomItemAction.giveRandomItem(recipient);
+                    Material material = sharedMaterial;
+                    if (shareResult) {
+                        if (sharedMaterial == null) {
+                            continue;
+                        }
+                        randomItemAction.giveItem(recipient, sharedMaterial);
+                    } else {
+                        material = randomItemAction.giveRandomItem(recipient);
+                    }
                     if (material == null) {
                         continue;
                     }

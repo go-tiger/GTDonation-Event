@@ -136,7 +136,7 @@ public final class GTDonationEvent extends JavaPlugin {
         FanMeetingManager fanMeetingManager = new FanMeetingManager(this);
         DiamondCurseManager diamondCurseManager = new DiamondCurseManager(this);
         RandomTargetRouletteManager rouletteManager = new RandomTargetRouletteManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager, rouletteManager);
+        scriptAPI = new DonationScriptAPI(this, actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager, rouletteManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),

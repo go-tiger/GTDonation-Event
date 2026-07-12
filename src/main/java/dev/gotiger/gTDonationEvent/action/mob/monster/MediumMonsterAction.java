@@ -35,7 +35,10 @@ public class MediumMonsterAction implements DonationAction {
         if (entityType == null) {
             return null;
         }
+        return spawnMonster(target, entityType);
+    }
 
+    public Entity spawnMonster(Player target, EntityType entityType) {
         int radius = plugin.getConfig().getInt("medium-monster.radius", 4);
         Location center = target.getLocation();
         double offsetX = (random.nextDouble() * 2 - 1) * radius;
@@ -45,7 +48,7 @@ public class MediumMonsterAction implements DonationAction {
         return target.getWorld().spawnEntity(spawnLocation, entityType);
     }
 
-    private EntityType pickRandomEntityType() {
+    public EntityType pickRandomEntityType() {
         List<EntityType> available = new ArrayList<>();
         for (String name : plugin.getConfig().getStringList("medium-monster.candidates")) {
             try {

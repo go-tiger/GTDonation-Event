@@ -22,6 +22,12 @@ public class RandomTargetRouletteManager {
     private static final long TICKS_BETWEEN_SPINS = 2L;
     private static final long TICKS_AFTER_WINNER = 30L;
 
+    /**
+     * playRouletteEffect 연출의 총 소요 시간(틱). Skript의 wait 구문은 이 값을(skript-reflect가
+     * 반환하는 Java 숫자 타입) 파싱하지 못하므로 스크립트에서는 이 값을 계산해 리터럴로 적어야 한다.
+     */
+    public static final long TOTAL_EFFECT_TICKS = SPIN_COUNT * TICKS_BETWEEN_SPINS + TICKS_AFTER_WINNER;
+
     private final JavaPlugin plugin;
     private final Random random = new Random();
 
@@ -47,6 +53,28 @@ public class RandomTargetRouletteManager {
 
         Player winner = candidates.get(0);
         playRoulette(winner, () -> onResolved.accept(candidates));
+    }
+
+    /**
+     * 스크립트에서 대상을 먼저 뽑아 쓰고 싶을 때 사용. 룰렛 연출 없이 target.resolve(donor)의
+     * 첫 번째(RANDOM인 경우 무작위로 뽑힌 유일한) 대상을 즉시 반환한다. 대상이 없으면 null.
+     */
+    public Player pickTarget(Player donor, DonationTarget target) {
+        List<Player> candidates = target.resolve(donor);
+        return candidates.isEmpty() ? null : candidates.get(0);
+    }
+
+    /**
+     * 스크립트에서 pickTarget으로 이미 뽑은 당첨자를 대상으로 룰렛 연출(타이틀 애니메이션)만 재생한다.
+     * 연출은 비동기로 진행되며 완료를 기다리지 않는다(연출이 끝나기 전에 이미 결과가 정해져 있으므로
+     * 실제 액션은 연출과 무관하게 바로 실행해도 무방하다).
+     */
+    public void playRouletteEffect(Player winner) {
+        if (winner == null) {
+            return;
+        }
+        playRoulette(winner, () -> {
+        });
     }
 
     private void playRoulette(Player winner, Runnable onFinished) {

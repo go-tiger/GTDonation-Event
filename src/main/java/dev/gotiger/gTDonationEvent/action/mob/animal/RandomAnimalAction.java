@@ -38,7 +38,10 @@ public class RandomAnimalAction implements DonationAction {
         if (entityType == null) {
             return null;
         }
+        return spawnAnimal(target, entityType);
+    }
 
+    public Entity spawnAnimal(Player target, EntityType entityType) {
         int radius = plugin.getConfig().getInt("random-animal.radius", 1);
         Location center = target.getLocation();
         double offsetX = (random.nextDouble() * 2 - 1) * radius;
@@ -48,7 +51,7 @@ public class RandomAnimalAction implements DonationAction {
         return target.getWorld().spawnEntity(spawnLocation, entityType);
     }
 
-    private EntityType pickRandomEntityType() {
+    public EntityType pickRandomEntityType() {
         Set<EntityType> excluded = new HashSet<>();
         for (String name : plugin.getConfig().getStringList("random-animal.exclude-entities")) {
             try {

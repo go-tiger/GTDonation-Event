@@ -8,6 +8,11 @@ random-roulette:
   # 순환 간격(틱, 20틱 = 1초)
   interval-ticks: 3
 
+# true면 랜덤 요소가 있는 액션(버프/디버프/동물/몬스터/아이템/크기 등)을
+# DonationTarget.ALL로 실행할 때 결과를 한 번만 뽑아 모든 대상에게 동일하게 적용합니다.
+# false면 대상마다 각각 새로 랜덤을 뽑습니다(대상마다 결과가 다를 수 있음).
+random-action-same-result-for-all: true
+
 chat-shooting:
   fireball-chance: 0.2
 

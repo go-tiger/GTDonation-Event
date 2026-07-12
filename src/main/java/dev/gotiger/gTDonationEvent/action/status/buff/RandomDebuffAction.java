@@ -34,15 +34,18 @@ public class RandomDebuffAction implements DonationAction {
         if (effectType == null) {
             return null;
         }
+        applyDebuff(target, effectType);
+        return effectType;
+    }
 
+    public void applyDebuff(Player target, PotionEffectType effectType) {
         int durationSeconds = plugin.getConfig().getInt("random-debuff.duration-seconds", 30);
         int amplifier = plugin.getConfig().getInt("random-debuff.amplifier", 1);
 
         target.addPotionEffect(new PotionEffect(effectType, durationSeconds * 20, amplifier));
-        return effectType;
     }
 
-    private PotionEffectType pickRandomEffect() {
+    public PotionEffectType pickRandomEffect() {
         List<PotionEffectType> available = new ArrayList<>();
         for (String name : plugin.getConfig().getStringList("random-buff.exclude-effects")) {
             PotionEffectType type = PotionEffectType.getByName(name);

@@ -36,16 +36,18 @@ public class RandomItemAction implements DonationAction {
         if (material == null) {
             return null;
         }
+        giveItem(target, material);
+        return material;
+    }
 
+    public void giveItem(Player target, Material material) {
         var leftover = target.getInventory().addItem(new ItemStack(material));
         for (var remaining : leftover.values()) {
             target.getWorld().dropItemNaturally(target.getLocation(), remaining);
         }
-
-        return material;
     }
 
-    private Material pickRandomMaterial() {
+    public Material pickRandomMaterial() {
         Set<Material> excluded = new HashSet<>();
         for (String name : plugin.getConfig().getStringList("random-item.exclude-items")) {
             Material material = Material.matchMaterial(name);

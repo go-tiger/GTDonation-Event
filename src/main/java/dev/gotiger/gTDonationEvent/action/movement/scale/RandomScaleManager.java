@@ -24,6 +24,13 @@ public class RandomScaleManager {
     }
 
     public boolean apply(Player player) {
+        double minScale = plugin.getConfig().getDouble("random-scale.min-scale", 0.5);
+        double maxScale = plugin.getConfig().getDouble("random-scale.max-scale", 2.0);
+        double scale = minScale + random.nextDouble() * (maxScale - minScale);
+        return apply(player, scale);
+    }
+
+    public boolean apply(Player player, double scale) {
         if (SCALE_ATTRIBUTE == null) {
             return false;
         }
@@ -33,12 +40,9 @@ public class RandomScaleManager {
             return false;
         }
 
-        double minScale = plugin.getConfig().getDouble("random-scale.min-scale", 0.5);
-        double maxScale = plugin.getConfig().getDouble("random-scale.max-scale", 2.0);
         int durationSeconds = plugin.getConfig().getInt("random-scale.duration-seconds", 30);
         long durationMillis = durationSeconds * 1000L;
 
-        double scale = minScale + random.nextDouble() * (maxScale - minScale);
         double originalScale = instance.getBaseValue();
         instance.setBaseValue(scale);
 

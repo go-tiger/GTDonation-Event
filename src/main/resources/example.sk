@@ -20,8 +20,33 @@
 # RANDOM/ALL은 targets.yml의 제외 규칙(관전자 모드, OP, /gtdonationevent ignore로
 # 등록한 플레이어)이 자동으로 적용되어 대상에서 빠집니다. PLAYER는 영향받지 않습니다.
 #
+# 랜덤 요소가 있는 액션(getRandomBuff, getRandomDebuff, getRandomAnimal, getWeakMonster,
+# getMediumMonster, getStrongMonster, getRandomItem, getRandomScale)을 ALL로 실행하면,
+# config.yml의 random-action-same-result-for-all(기본 true)에 따라 결과를 한 번만 뽑아
+# 모든 대상에게 동일하게 적용합니다(예: 전원에게 같은 종류의 동물 소환). false로 바꾸면
+# 대상마다 각각 새로 랜덤을 뽑아 서로 다른 결과를 받습니다.
+#
 # 예) 랜덤 플레이어에게 넉백 적용(룰렛 연출 자동 재생):
 #   {_api}.getKnockback({_player}, {_donorName}, DonationTarget.RANDOM)
+#
+# 당첨된 플레이어의 이름을 스크립트에서 직접 쓰고 싶다면(예: 커스텀 브로드캐스트 메시지),
+# pickTarget으로 대상을 먼저 뽑고 playRouletteEffect로 연출만 재생한 뒤, 뽑힌 플레이어({_winner})를
+# target 인자 없이(=자기 자신에게 적용) 그대로 각 액션에 넘기세요. target 인자를 다시 넣으면
+# resolve()가 한 번 더 실행되어 의미가 없어지니 주의하세요.
+#
+# playRouletteEffect는 연출을 시작만 시키고 즉시 리턴하므로(비동기), 연출이 끝난 뒤에 지급되게
+# 하려면 연출 총 소요 시간(52 ticks = 2.6초, RandomTargetRouletteManager.TOTAL_EFFECT_TICKS)만큼
+# 반드시 wait 해야 합니다. skript-reflect가 반환하는 Java 숫자 타입은 Skript의 wait 구문(timespan)이
+# 파싱하지 못하므로("Can't understand this condition/effect" 오류 발생) 아래처럼 리터럴 값을
+# 직접 적어주세요. RandomTargetRouletteManager의 상수를 바꾸면 이 값도 함께 수정해야 합니다:
+#
+#   set {_winner} to {_api}.pickTarget({_player}, DonationTarget.RANDOM)
+#   if {_winner} is not set:
+#       stop
+#   {_api}.playRouletteEffect({_winner})
+#   wait 52 ticks
+#   {_api}.getBread({_winner}, 5)
+#   broadcast "&a[후원] &f%{_winner}%님에게 빵 5개 지급"
 
 import:
     dev.gotiger.gTDonationCore.event.DonationEvent
