@@ -71,6 +71,7 @@ public final class GTDonationEvent extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        saveResource("example.sk", false);
 
         new ConfigMigrator().migrate(this, getConfig());
 
