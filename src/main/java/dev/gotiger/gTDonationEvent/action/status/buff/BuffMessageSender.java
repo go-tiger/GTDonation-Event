@@ -50,7 +50,7 @@ public final class BuffMessageSender {
     private BuffMessageSender() {
     }
 
-    public static void broadcastBuffMessage(Player recipient, String donorName, PotionEffectType effectType) {
+    public static void sendBuffMessage(Player recipient, String donorName, PotionEffectType effectType) {
         if (PAPER_AVAILABLE) {
             try {
                 sendPaperMessage(recipient, donorName, effectType);
@@ -60,7 +60,7 @@ public final class BuffMessageSender {
             }
         }
 
-        recipient.getServer().broadcastMessage(
+        recipient.sendMessage(
                 ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 "
                         + ChatColor.LIGHT_PURPLE + BuffNameKo.of(effectType) + ChatColor.GRAY + " 버프를 지급"
         );
@@ -76,8 +76,6 @@ public final class BuffMessageSender {
         message = appendMethod.invoke(message, buffNameComponent);
         message = appendMethod.invoke(message, colorMethod.invoke(textMethod.invoke(null, " 버프를 지급"), grayColor));
 
-        for (Player online : recipient.getServer().getOnlinePlayers()) {
-            sendMessageComponentMethod.invoke(online, message);
-        }
+        sendMessageComponentMethod.invoke(recipient, message);
     }
 }

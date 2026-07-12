@@ -163,7 +163,7 @@ public class DonationScriptAPI {
                 if (!diamondCurseManager.curse(recipient)) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 다이아의 저주 발동"
                 );
             }
@@ -178,7 +178,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 fanMeetingManager.summon(recipient, donorName);
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 팬미팅!"
                 );
             }
@@ -193,7 +193,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 randomTeleportManager.teleport(recipient);
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 랜덤 순간이동 발동"
                 );
             }
@@ -210,7 +210,7 @@ public class DonationScriptAPI {
                 if (!miningCurseManager.curse(recipient)) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 광질 저주 발동"
                 );
             }
@@ -227,7 +227,7 @@ public class DonationScriptAPI {
                 if (!slotLockManager.lock(recipient)) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 인벤토리 슬롯 하나가 잠김"
                 );
             }
@@ -244,7 +244,7 @@ public class DonationScriptAPI {
                 if (!waterPrisonManager.trap(recipient)) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 물 감옥에 갇힘"
                 );
             }
@@ -273,7 +273,7 @@ public class DonationScriptAPI {
                 if (!applied) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 크기가 랜덤하게 변경됨"
                 );
             }
@@ -288,7 +288,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 frostbiteManager.apply(recipient);
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 동상 발동"
                 );
             }
@@ -306,7 +306,7 @@ public class DonationScriptAPI {
                 if (detectedCount == 0) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 몬스터 탐지 발동"
                 );
             }
@@ -324,7 +324,7 @@ public class DonationScriptAPI {
                 if (convertedCount == 0) {
                     continue;
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님 주변이 다이아존으로 변했습니다!"
                 );
             }
@@ -342,7 +342,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 인벤토리 세이브권 지급"
                 );
             }
@@ -360,7 +360,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 악마의 곡괭이 지급"
                 );
             }
@@ -378,7 +378,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 유체이탈의 부적 지급"
                 );
             }
@@ -393,7 +393,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 boolean started = enchantFairyManager.enhance(recipient, (enchantment, level) ->
-                        recipient.getServer().broadcastMessage(
+                        recipient.sendMessage(
                                 ChatColor.LIGHT_PURPLE + "강화 요정이 " + ChatColor.WHITE + recipient.getName()
                                         + ChatColor.LIGHT_PURPLE + "님의 장비를 " + ChatColor.GOLD
                                         + enchantment.getKey().getKey() + " " + level
@@ -402,7 +402,7 @@ public class DonationScriptAPI {
                 );
 
                 if (started) {
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 강화 요정이 나타났습니다!"
                     );
                 }
@@ -421,7 +421,7 @@ public class DonationScriptAPI {
                 for (var remaining : leftover.values()) {
                     recipient.getWorld().dropItemNaturally(recipient.getLocation(), remaining);
                 }
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 즉석 인챈트권 지급"
                 );
             }
@@ -435,11 +435,11 @@ public class DonationScriptAPI {
     public void getSpecialItem(Player player, String donorName, DonationTarget target) {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 특별한 아이템 룰렛!"
                 );
                 specialItemManager.spin(recipient, material ->
-                        SpecialItemMessageSender.broadcastResultMessage(recipient, donorName, material)
+                        SpecialItemMessageSender.sendResultMessage(recipient, donorName, material)
                 );
             }
         });
@@ -465,7 +465,7 @@ public class DonationScriptAPI {
         rouletteManager.resolve(player, target, recipients -> {
             for (Player recipient : recipients) {
                 scarecrowManager.spawn(recipient);
-                recipient.getServer().broadcastMessage(
+                recipient.sendMessage(
                         ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 음식 허수아비를 소환"
                 );
             }
@@ -513,7 +513,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, amount);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 불사의 토템 지급"
                     );
                 }
@@ -545,7 +545,7 @@ public class DonationScriptAPI {
                     if (effectType == null) {
                         continue;
                     }
-                    BuffMessageSender.broadcastBuffMessage(recipient, donorName, effectType);
+                    BuffMessageSender.sendBuffMessage(recipient, donorName, effectType);
                 }
             });
         });
@@ -575,7 +575,7 @@ public class DonationScriptAPI {
                     if (effectType == null) {
                         continue;
                     }
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 "
                                     + ChatColor.DARK_RED + BuffNameKo.of(effectType) + ChatColor.GRAY + " 디버프를 받음"
                     );
@@ -594,7 +594,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     int thrownCount = expBottleAction.throwBottles(recipient);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 경험치 병 "
                                     + ChatColor.YELLOW + thrownCount + "개" + ChatColor.GRAY + " 지급"
                     );
@@ -621,7 +621,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 동물을 소환"
                     );
                 }
@@ -638,7 +638,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 슈퍼 회복 지급"
                     );
                 }
@@ -655,7 +655,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 추가 체력 지급"
                     );
                 }
@@ -672,7 +672,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 깡! 발동"
                     );
                 }
@@ -698,7 +698,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 하급 몬스터를 소환"
                     );
                 }
@@ -724,7 +724,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 중급 몬스터를 소환"
                     );
                 }
@@ -741,7 +741,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 화상 발동"
                     );
                 }
@@ -758,7 +758,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님에게 벼락 발동"
                     );
                 }
@@ -775,7 +775,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 TNT를 소환"
                     );
                 }
@@ -792,7 +792,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 폭죽 발사"
                     );
                 }
@@ -809,7 +809,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 딱콩 발동"
                     );
                 }
@@ -826,7 +826,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 시야가 강제로 변경됨"
                     );
                 }
@@ -852,7 +852,7 @@ public class DonationScriptAPI {
                     if (!spawned) {
                         continue;
                     }
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 상급 몬스터를 소환"
                     );
                 }
@@ -869,7 +869,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 자유낙하 발동"
                     );
                 }
@@ -886,7 +886,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 음식이 모두 썩음"
                     );
                 }
@@ -903,7 +903,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 점프 발동"
                     );
                 }
@@ -920,7 +920,7 @@ public class DonationScriptAPI {
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     action.execute(recipient, 0);
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 아이템 하나가 불타서 사라짐"
                     );
                 }
@@ -952,7 +952,7 @@ public class DonationScriptAPI {
                     if (material == null) {
                         continue;
                     }
-                    recipient.getServer().broadcastMessage(
+                    recipient.sendMessage(
                             ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님이 랜덤 아이템 "
                                     + ChatColor.YELLOW + material.name() + ChatColor.GRAY + " 지급"
                     );

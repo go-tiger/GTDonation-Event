@@ -102,7 +102,7 @@ public class ChatRaidManager implements Listener {
         pillager.setCustomNameVisible(true);
         pillager.setTarget(watched);
 
-        watched.getServer().broadcastMessage(
+        watched.sendMessage(
                 ChatColor.RED + "[채팅 레이드] " + ChatColor.WHITE + chatterName + ChatColor.GRAY + "님이 약탈자로 참여했습니다!"
         );
     }

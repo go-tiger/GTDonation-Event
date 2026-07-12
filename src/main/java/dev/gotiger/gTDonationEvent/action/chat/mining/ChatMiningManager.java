@@ -78,7 +78,7 @@ public class ChatMiningManager implements Listener {
         if (triggeredBy != null) {
             int minedCount = blockMiner.mineAround(watched, session.getRadius());
             int totalMinedCount = session.addMinedCount(minedCount);
-            watched.getServer().broadcastMessage(
+            watched.sendMessage(
                     ChatColor.GREEN + triggeredBy + ChatColor.WHITE + "님이 블록 채굴! (총 "
                             + ChatColor.YELLOW + totalMinedCount + "개" + ChatColor.WHITE + ")"
             );

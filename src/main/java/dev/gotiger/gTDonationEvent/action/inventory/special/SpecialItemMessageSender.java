@@ -48,7 +48,7 @@ public final class SpecialItemMessageSender {
     private SpecialItemMessageSender() {
     }
 
-    public static void broadcastResultMessage(Player recipient, String donorName, Material material) {
+    public static void sendResultMessage(Player recipient, String donorName, Material material) {
         if (PAPER_AVAILABLE) {
             try {
                 sendPaperMessage(recipient, donorName, material);
@@ -58,7 +58,7 @@ public final class SpecialItemMessageSender {
             }
         }
 
-        recipient.getServer().broadcastMessage(
+        recipient.sendMessage(
                 ChatColor.AQUA + "[후원] " + ChatColor.WHITE + donorName + ChatColor.GRAY + "님의 룰렛 결과: "
                         + ChatColor.GOLD + ItemNameKo.of(material) + ChatColor.GRAY + " 획득!"
         );
@@ -74,8 +74,6 @@ public final class SpecialItemMessageSender {
         message = appendMethod.invoke(message, itemNameComponent);
         message = appendMethod.invoke(message, colorMethod.invoke(textMethod.invoke(null, " 획득!"), grayColor));
 
-        for (Player online : recipient.getServer().getOnlinePlayers()) {
-            sendMessageComponentMethod.invoke(online, message);
-        }
+        sendMessageComponentMethod.invoke(recipient, message);
     }
 }

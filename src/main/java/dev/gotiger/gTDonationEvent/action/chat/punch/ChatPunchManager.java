@@ -95,7 +95,7 @@ public class ChatPunchManager implements Listener {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("chatter", event.getChatterName());
         placeholders.put("count", String.valueOf(totalPunchCount));
-        watched.getServer().broadcastMessage(messages.get("chat-punch.broadcast", placeholders));
+        watched.sendMessage(messages.get("chat-punch.broadcast", placeholders));
     }
 
     private void punch(Player watched) {

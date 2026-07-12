@@ -82,7 +82,7 @@ public class ChatShootingManager implements Listener {
         boolean isFireball = projectileShooter.shoot(watched, event.getChatterName(), fireballChance);
         int totalShotCount = session.addShotCount(1);
         String projectileName = isFireball ? ChatColor.GOLD + "화염구" + ChatColor.GRAY : "화살";
-        watched.getServer().broadcastMessage(
+        watched.sendMessage(
                 ChatColor.RED + "[채팅 사격] " + ChatColor.WHITE + event.getMessage() + ChatColor.GRAY + " " + projectileName + " 발사! ("
                         + ChatColor.YELLOW + totalShotCount + "번째" + ChatColor.GRAY + ")"
         );
