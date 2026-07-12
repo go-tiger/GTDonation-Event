@@ -5,11 +5,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,30 +12,19 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class TargetExclusionConfig {
+public class TargetExclusionConfig extends YamlResourceConfig {
 
-    private final JavaPlugin plugin;
     private boolean excludeSpectator;
     private boolean excludeOp;
     private Set<UUID> excludedPlayerIds = new HashSet<>();
 
     public TargetExclusionConfig(JavaPlugin plugin) {
-        this.plugin = plugin;
+        super(plugin, "targets.yml");
         load();
     }
 
     public void load() {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file());
-
-        try (InputStream defaultStream = plugin.getResource("targets.yml")) {
-            if (defaultStream != null) {
-                YamlConfiguration defaults = YamlConfiguration.loadConfiguration(
-                        new InputStreamReader(defaultStream, StandardCharsets.UTF_8)
-                );
-                config.setDefaults(defaults);
-            }
-        } catch (Exception ignored) {
-        }
+        YamlConfiguration config = loadYaml();
 
         excludeSpectator = config.getBoolean("exclusion.exclude-spectator", true);
         excludeOp = config.getBoolean("exclusion.exclude-op", false);
@@ -94,26 +78,12 @@ public class TargetExclusionConfig {
     }
 
     private void persistExcludedPlayers() {
-        File file = file();
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        YamlConfiguration config = loadYaml();
         List<String> sorted = new ArrayList<>();
         for (UUID id : new TreeSet<>(excludedPlayerIds)) {
             sorted.add(id.toString());
         }
         config.set("exclusion.exclude-players", sorted);
-
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            plugin.getLogger().warning("targets.yml 저장 실패: " + e.getMessage());
-        }
-    }
-
-    private File file() {
-        File file = new File(plugin.getDataFolder(), "targets.yml");
-        if (!file.exists()) {
-            plugin.saveResource("targets.yml", false);
-        }
-        return file;
+        save(config);
     }
 }

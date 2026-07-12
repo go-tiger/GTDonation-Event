@@ -2,7 +2,7 @@ package dev.gotiger.gTDonationEvent.action.chat.punch;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
-import dev.gotiger.gTDonationEvent.message.MessageService;
+import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
