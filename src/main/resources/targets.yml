@@ -8,4 +8,4 @@ exclusion:
   exclude-op: false
   # 특정 플레이어를 대상에서 제외 (UUID로 저장됩니다. 닉네임이 바뀌어도 유지됨)
   # /gtdonationevent ignore add|remove [플레이어] 명령어로 관리하세요.
-  exclude-players: []
+  exclude-players: [ ]

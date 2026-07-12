@@ -56,6 +56,7 @@ import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
 import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import dev.gotiger.gTDonationEvent.config.MessageService;
+import dev.gotiger.gTDonationEvent.config.RandomTargetRouletteManager;
 import dev.gotiger.gTDonationEvent.config.TargetExclusionConfig;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -134,7 +135,8 @@ public final class GTDonationEvent extends JavaPlugin {
         RandomTeleportManager randomTeleportManager = new RandomTeleportManager(this);
         FanMeetingManager fanMeetingManager = new FanMeetingManager(this);
         DiamondCurseManager diamondCurseManager = new DiamondCurseManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager);
+        RandomTargetRouletteManager rouletteManager = new RandomTargetRouletteManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager, rouletteManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
