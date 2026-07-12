@@ -21,6 +21,8 @@ import dev.gotiger.gTDonationEvent.action.inventory.food.ExpBottleAction;
 import dev.gotiger.gTDonationEvent.action.inventory.food.SteakAction;
 import dev.gotiger.gTDonationEvent.action.movement.freefall.FreeFallAction;
 import dev.gotiger.gTDonationEvent.action.hazard.frostbite.FrostbiteManager;
+import dev.gotiger.gTDonationEvent.action.hazard.instantdeath.InstantDeathAction;
+import dev.gotiger.gTDonationEvent.action.hazard.instantdeath.InstantDeathManager;
 import dev.gotiger.gTDonationEvent.action.status.heal.AbsorptionAction;
 import dev.gotiger.gTDonationEvent.action.status.heal.SuperHealAction;
 import dev.gotiger.gTDonationEvent.action.inventory.inventorysave.InventorySaveManager;
@@ -84,6 +86,8 @@ public final class GTDonationEvent extends JavaPlugin {
         targetExclusionConfig = new TargetExclusionConfig(this);
         DonationTarget.configure(targetExclusionConfig);
 
+        InstantDeathManager instantDeathManager = new InstantDeathManager();
+
         actionRegistry = new DonationActionRegistry();
         actionRegistry.register(new BreadAction());
         actionRegistry.register(new SteakAction());
@@ -109,6 +113,7 @@ public final class GTDonationEvent extends JavaPlugin {
         actionRegistry.register(new TntAction(this));
         actionRegistry.register(new FireworkAction(this));
         actionRegistry.register(new PokeAction(this));
+        actionRegistry.register(new InstantDeathAction(instantDeathManager));
 
         MessageService messageService = new MessageService(this);
 
@@ -124,7 +129,7 @@ public final class GTDonationEvent extends JavaPlugin {
         EnchantFairyManager enchantFairyManager = new EnchantFairyManager(this);
         SoulOutManager soulOutManager = new SoulOutManager(this);
         DevilPickaxeManager devilPickaxeManager = new DevilPickaxeManager(this);
-        InventorySaveManager inventorySaveManager = new InventorySaveManager(this);
+        InventorySaveManager inventorySaveManager = new InventorySaveManager(this, instantDeathManager);
         DiamondZoneManager diamondZoneManager = new DiamondZoneManager(this);
         MonsterScanManager monsterScanManager = new MonsterScanManager(this);
         FrostbiteManager frostbiteManager = new FrostbiteManager(this);
@@ -142,6 +147,7 @@ public final class GTDonationEvent extends JavaPlugin {
                 new DonationEventListener(this, donationConfig, actionRegistry),
                 this
         );
+        getServer().getPluginManager().registerEvents(instantDeathManager, this);
         getServer().getPluginManager().registerEvents(chatMiningManager, this);
         getServer().getPluginManager().registerEvents(chatRaidManager, this);
         getServer().getPluginManager().registerEvents(chatRushManager, this);

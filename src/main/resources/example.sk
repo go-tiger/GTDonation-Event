@@ -133,139 +133,144 @@ on DonationEvent:
         # diamond-zone.duration-seconds 후 원래 블록으로 자동 복구됩니다
         {_api}.getDiamondZone({_player}, {_donorName}, DonationTarget.PLAYER)
 
+    if {_amount} = 21000:
+        # 즉시 체력을 0으로 만들어 사망시킵니다. 불사의 토템 발동과 인벤토리 세이브권 소모를
+        # 모두 무시하고 강제로 사망 처리됩니다
+        {_api}.getInstantDeath({_player}, {_donorName}, DonationTarget.PLAYER)
+
     # ===== inventory (아이템/인벤토리 조작) =====
 
-    if {_amount} = 21000:
+    if {_amount} = 22000:
         {_api}.getBread({_player}, 1, DonationTarget.PLAYER)
 
-    if {_amount} = 22000:
+    if {_amount} = 23000:
         {_api}.getSteak({_player}, 1, DonationTarget.PLAYER)
 
-    if {_amount} = 23000:
+    if {_amount} = 24000:
         # 플레이어 앞에 경험치 병을 다수 투척 (개수는 config.yml의 exp-bottle.min-count~max-count 범위에서 랜덤)
         {_api}.getExpBottle({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 24000:
+    if {_amount} = 25000:
         # 플레이어 앞에 아이템 디스플레이가 special-item.candidates 목록 사이를 슬롯머신처럼 순회하다가
         # special-item.spin-seconds 후 당첨 아이템에 멈추고 special-item.drop-mode(인벤토리/드롭)로 지급
         {_api}.getSpecialItem({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 25000:
+    if {_amount} = 26000:
         # 즉석 인챈트권 지급 (인벤토리 공간 없으면 바닥 드롭). 인챈트권을 커서로 든 채로 다른 아이템을
         # 클릭하면 적용 가능한 인챈트 중 하나가 1~바닐라 최대레벨로 즉시 적용되고 소모됩니다
         {_api}.getEnchantScroll({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 26000:
+    if {_amount} = 27000:
         # 강화 요정(벡스)이 나타나 주손/장착 갑옷 중 랜덤 하나를 랜덤 인챈트로 강화 후 사라짐
         {_api}.getEnchantFairy({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 27000:
+    if {_amount} = 28000:
         {_api}.getTotem({_player}, 1, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 28000:
+    if {_amount} = 29000:
         # 악마의 곡괭이 지급 (네더라이트 곡괭이 모양, 내구도 무한). config.yml의 devil-pickaxe.use-count 만큼
         # 채굴 가능하며, 캔 블록을 중심으로 시선 방향에 수직인 3x3 범위를 함께 채굴 후 사용 횟수가 소진되면 사라짐
         {_api}.getDevilPickaxe({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 29000:
+    if {_amount} = 30000:
         # 인벤토리 세이브권 지급. 인벤토리에 가지고 있기만 하면 사망 시 자동으로 발동되어
         # 아이템/경험치 드롭을 막고(유지), 세이브권 1개만 소모됩니다
         {_api}.getInventorySave({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 30000:
+    if {_amount} = 31000:
         # config.yml의 random-item.exclude-items를 제외한 모든 아이템 중 하나를 랜덤 지급
         # ALL 대상이면 random-action-same-result-for-all 설정에 따라 전원이 같은 아이템을 받을 수 있음
         {_api}.getRandomItem({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 31000:
+    if {_amount} = 32000:
         # 빈 인벤토리 슬롯 하나를 slot-lock.duration-seconds 동안 사용 불가로 잠급니다
         {_api}.getSlotLock({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 32000:
+    if {_amount} = 33000:
         # 인벤토리에 보유중인 모든 음식을 썩은 살점으로 교체합니다
         {_api}.getRotFood({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 33000:
+    if {_amount} = 34000:
         # 인벤토리에서 랜덤 아이템 1개를 골라 바닥에 떨어뜨리고 불타는 채로 사라지게 합니다
         {_api}.getItemRemove({_player}, {_donorName}, DonationTarget.PLAYER)
 
     # ===== mob (동물/몬스터 소환) =====
 
-    if {_amount} = 34000:
+    if {_amount} = 35000:
         # 서버에 등록된 생물 중 config.yml의 random-animal.exclude-entities에 없는 것을 플레이어 주변(random-animal.radius)에 랜덤 소환
         # ALL 대상이면 random-action-same-result-for-all 설정에 따라 전원 주변에 같은 종류의 동물이 소환될 수 있음
         {_api}.getRandomAnimal({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 35000:
+    if {_amount} = 36000:
         # 플레이어 정면 2칸 앞에 음식 허수아비 소환 (config.yml의 scarecrow.duration-seconds 동안 유지,
         # 때리면 scarecrow.food-material/food-count 만큼 음식 지급, 이름표에 맞은 횟수 표시)
         {_api}.getScarecrow({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 36000:
+    if {_amount} = 37000:
         # 유체이탈의 부적 지급. 우클릭하면 config.yml의 soul-out.duration-seconds 동안 스펙테이터 모드가 되어
         # 주변을 뚫어볼 수 있고(다른 유저에게는 안 보임), 시간이 지나면 원래 위치/모드로 자동 복귀
         {_api}.getSoulOutCharm({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 37000:
+    if {_amount} = 38000:
         # 플레이어 주변(monster-scan.radius) 몬스터를 monster-scan.duration-seconds 동안 글로우로 탐지
         {_api}.getMonsterScan({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 38000:
+    if {_amount} = 39000:
         # weak-monster.candidates 중 하나를 플레이어 주변(weak-monster.radius)에 랜덤 소환
         # ALL 대상이면 random-action-same-result-for-all 설정에 따라 전원 주변에 같은 종류의 몬스터가 소환될 수 있음
         {_api}.getWeakMonster({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 39000:
+    if {_amount} = 40000:
         # medium-monster.candidates 중 하나를 플레이어 주변(medium-monster.radius)에 랜덤 소환
         # ALL 대상이면 random-action-same-result-for-all 설정에 따라 전원 주변에 같은 종류의 몬스터가 소환될 수 있음
         {_api}.getMediumMonster({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 40000:
+    if {_amount} = 41000:
         # strong-monster.candidates 중 하나를 플레이어 주변(strong-monster.radius)에 랜덤 소환
         # ALL 대상이면 random-action-same-result-for-all 설정에 따라 전원 주변에 같은 종류의 몬스터가 소환될 수 있음
         {_api}.getStrongMonster({_player}, {_donorName}, DonationTarget.PLAYER)
 
-    if {_amount} = 41000:
+    if {_amount} = 42000:
         # 플레이어 머리를 쓴 좀비를 fan-meeting.min-count~max-count명 랜덤으로 주변(fan-meeting.radius)에 소환.
         # 이름표는 "[팬] 도너이름"으로 표시됩니다
         {_api}.getFanMeeting({_player}, {_donorName}, DonationTarget.PLAYER)
 
     # ===== chat (채팅 트리거 기반) =====
 
-    if {_amount} = 42000:
+    if {_amount} = 43000:
         # 30초 동안 "영" 다음에 바로 "차"가 오면(다른 시청자가 이어도 됨) 채굴 발동
         {_api}.getChatMining({_player}, 30, "영", "차", 2, DonationTarget.PLAYER)
 
-    if {_amount} = 43000:
+    if {_amount} = 44000:
         # 60초 동안 "채굴"이라는 단어만 채팅에 나오면 즉시 채굴 발동
         {_api}.getChatMining({_player}, 60, "채굴", null, 3, DonationTarget.PLAYER)
 
-    if {_amount} = 44000:
+    if {_amount} = 45000:
         # 30초 동안 단어 조건 없이 채팅이 올라올 때마다 즉시 채굴 발동
         {_api}.getChatMining({_player}, 30, null, null, 2, DonationTarget.PLAYER)
 
-    if {_amount} = 45000:
+    if {_amount} = 46000:
         # 30초 동안 채팅이 올라올 때마다 화살 발사 (config.yml의 chat-shooting.fireball-chance 확률로 화염구 발사)
         {_api}.getChatShooting({_player}, 30, null, DonationTarget.PLAYER)
 
-    if {_amount} = 46000:
+    if {_amount} = 47000:
         # 30초 동안 "사격"이라는 단어가 포함된 채팅이 올라올 때만 발사
         {_api}.getChatShooting({_player}, 30, "사격", DonationTarget.PLAYER)
 
-    if {_amount} = 47000:
+    if {_amount} = 48000:
         # 60초 동안 채팅으로 "!참여"를 입력하면(chat-raid.max-participants명까지) 약탈자로 소환되어 플레이어를 공격합니다
         {_api}.getChatRaid({_player}, 60, DonationTarget.PLAYER)
 
-    if {_amount} = 48000:
+    if {_amount} = 49000:
         # 30초 동안 채팅이 올라올 때마다 그 메시지를 이름표로 단 좀벌레가 소환되어 플레이어를 공격합니다
         {_api}.getChatRush({_player}, 30, DonationTarget.PLAYER)
 
-    if {_amount} = 49000:
+    if {_amount} = 50000:
         # 30초 동안 "펀치"가 포함된 채팅이 올라올 때마다 플레이어가 랜덤 방향으로 넉백됩니다 (chat-punch.strength로 세기 조절)
         {_api}.getChatPunch({_player}, 30, DonationTarget.PLAYER)
 
     # ===== misc (기타) =====
 
-    if {_amount} = 50000:
+    if {_amount} = 51000:
         # 플레이어 주변(xray.radius) 지하 광석을 xray.duration-seconds 동안 광물색 글로우로 표시 (config.yml의 xray.ores에서 광물-색 매핑)
         {_api}.getXray({_player}, {_donorName}, DonationTarget.PLAYER)

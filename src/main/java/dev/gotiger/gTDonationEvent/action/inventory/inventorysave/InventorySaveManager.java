@@ -1,5 +1,6 @@
 package dev.gotiger.gTDonationEvent.action.inventory.inventorysave;
 
+import dev.gotiger.gTDonationEvent.action.hazard.instantdeath.InstantDeathManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,10 +23,12 @@ public class InventorySaveManager implements Listener {
 
     private final JavaPlugin plugin;
     private final NamespacedKey key;
+    private final InstantDeathManager instantDeathManager;
 
-    public InventorySaveManager(JavaPlugin plugin) {
+    public InventorySaveManager(JavaPlugin plugin, InstantDeathManager instantDeathManager) {
         this.plugin = plugin;
         this.key = new NamespacedKey(plugin, "inventory_save_ticket");
+        this.instantDeathManager = instantDeathManager;
     }
 
     public ItemStack createTicket() {
@@ -52,6 +55,10 @@ public class InventorySaveManager implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
+        if (instantDeathManager.isInstantDeath(player)) {
+            return;
+        }
+
         PlayerInventory inventory = player.getInventory();
         ItemStack[] contents = inventory.getContents();
 

@@ -898,6 +898,21 @@ public class DonationScriptAPI {
         });
     }
 
+    public void getInstantDeath(Player player, String donorName) {
+        getInstantDeath(player, donorName, DonationTarget.PLAYER);
+    }
+
+    public void getInstantDeath(Player player, String donorName, DonationTarget target) {
+        actionRegistry.get("INSTANT_DEATH").ifPresent(action -> {
+            rouletteManager.resolve(player, target, recipients -> {
+                for (Player recipient : recipients) {
+                    action.execute(recipient, 0);
+                    recipient.sendMessage(messages.get("instant-death.msg", donorPlaceholder(donorName)));
+                }
+            });
+        });
+    }
+
     private void run(String actionName, Player player, int amount, DonationTarget target) {
         actionRegistry.get(actionName).ifPresent(action ->
                 rouletteManager.resolve(player, target, recipients -> {
