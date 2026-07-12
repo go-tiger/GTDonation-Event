@@ -1,6 +1,7 @@
 package dev.gotiger.gTDonationEvent.action.chat.punch;
 
 import dev.gotiger.gTDonationCore.event.ChatEvent;
+import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import dev.gotiger.gTDonationEvent.config.MessageService;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -28,43 +29,46 @@ public class ChatPunchManager implements Listener {
         this.messages = messages;
     }
 
-    public void start(Player watched, int seconds) {
+    public void start(Player donor, int seconds, DonationTarget target) {
         long durationMillis = seconds * 1000L;
-        UUID id = watched.getUniqueId();
 
-        ChatPunchSession previous = sessions.remove(id);
-        if (previous != null) {
-            previous.getBossBar().removeAll();
-        }
+        for (Player watched : target.resolve(donor)) {
+            UUID id = watched.getUniqueId();
 
-        ChatPunchSession session = new ChatPunchSession(durationMillis);
-        sessions.put(id, session);
-        session.getBossBar().addPlayer(watched);
-        watched.sendTitle(
-                messages.get("chat-punch.start-title"),
-                messages.get("chat-punch.start-subtitle"),
-                10, 40, 10
-        );
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                ChatPunchSession current = sessions.get(id);
-                if (current == null || current != session) {
-                    cancel();
-                    return;
-                }
-
-                if (session.isExpired()) {
-                    session.getBossBar().removeAll();
-                    sessions.remove(id, session);
-                    cancel();
-                    return;
-                }
-
-                session.updateBossBar();
+            ChatPunchSession previous = sessions.remove(id);
+            if (previous != null) {
+                previous.getBossBar().removeAll();
             }
-        }.runTaskTimer(plugin, 0L, 20L);
+
+            ChatPunchSession session = new ChatPunchSession(durationMillis);
+            sessions.put(id, session);
+            session.getBossBar().addPlayer(watched);
+            watched.sendTitle(
+                    messages.get("chat-punch.start-title"),
+                    messages.get("chat-punch.start-subtitle"),
+                    10, 40, 10
+            );
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    ChatPunchSession current = sessions.get(id);
+                    if (current == null || current != session) {
+                        cancel();
+                        return;
+                    }
+
+                    if (session.isExpired()) {
+                        session.getBossBar().removeAll();
+                        sessions.remove(id, session);
+                        cancel();
+                        return;
+                    }
+
+                    session.updateBossBar();
+                }
+            }.runTaskTimer(plugin, 0L, 20L);
+        }
     }
 
     @EventHandler

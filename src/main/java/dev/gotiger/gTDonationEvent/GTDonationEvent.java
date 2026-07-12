@@ -50,16 +50,21 @@ import dev.gotiger.gTDonationEvent.action.movement.waterprison.WaterPrisonManage
 import dev.gotiger.gTDonationEvent.action.misc.xray.XrayManager;
 import dev.gotiger.gTDonationEvent.command.EffectsSubCommand;
 import dev.gotiger.gTDonationEvent.command.GTDonationCommand;
+import dev.gotiger.gTDonationEvent.command.IgnoreSubCommand;
 import dev.gotiger.gTDonationEvent.command.ReloadSubCommand;
 import dev.gotiger.gTDonationEvent.config.ConfigMigrator;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
+import dev.gotiger.gTDonationEvent.config.DonationTarget;
 import dev.gotiger.gTDonationEvent.config.MessageService;
+import dev.gotiger.gTDonationEvent.config.RandomTargetRouletteManager;
+import dev.gotiger.gTDonationEvent.config.TargetExclusionConfig;
 import dev.gotiger.gTDonationEvent.listener.DonationEventListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GTDonationEvent extends JavaPlugin {
 
     private DonationConfig donationConfig;
+    private TargetExclusionConfig targetExclusionConfig;
     private DonationActionRegistry actionRegistry;
     private DonationScriptAPI scriptAPI;
     private boolean scriptMode;
@@ -75,6 +80,9 @@ public final class GTDonationEvent extends JavaPlugin {
 
         donationConfig = new DonationConfig();
         donationConfig.load(getConfig());
+
+        targetExclusionConfig = new TargetExclusionConfig(this);
+        DonationTarget.configure(targetExclusionConfig);
 
         actionRegistry = new DonationActionRegistry();
         actionRegistry.register(new BreadAction());
@@ -127,7 +135,8 @@ public final class GTDonationEvent extends JavaPlugin {
         RandomTeleportManager randomTeleportManager = new RandomTeleportManager(this);
         FanMeetingManager fanMeetingManager = new FanMeetingManager(this);
         DiamondCurseManager diamondCurseManager = new DiamondCurseManager(this);
-        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager);
+        RandomTargetRouletteManager rouletteManager = new RandomTargetRouletteManager(this);
+        scriptAPI = new DonationScriptAPI(actionRegistry, chatMiningManager, chatShootingManager, scarecrowManager, xrayManager, specialItemManager, enchantScrollManager, enchantFairyManager, soulOutManager, devilPickaxeManager, inventorySaveManager, diamondZoneManager, monsterScanManager, frostbiteManager, randomScaleManager, waterPrisonManager, slotLockManager, miningCurseManager, randomTeleportManager, fanMeetingManager, diamondCurseManager, chatRaidManager, chatRushManager, chatPunchManager, rouletteManager);
 
         getServer().getPluginManager().registerEvents(
                 new DonationEventListener(this, donationConfig, actionRegistry),
@@ -150,7 +159,8 @@ public final class GTDonationEvent extends JavaPlugin {
 
         getCommand("gtdonationevent").setExecutor(new GTDonationCommand(
                 new EffectsSubCommand(this),
-                new ReloadSubCommand(this, messageService, donationConfig)
+                new ReloadSubCommand(this, messageService, donationConfig, targetExclusionConfig),
+                new IgnoreSubCommand(targetExclusionConfig)
         ));
     }
 

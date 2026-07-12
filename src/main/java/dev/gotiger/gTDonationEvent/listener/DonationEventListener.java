@@ -6,6 +6,7 @@ import dev.gotiger.gTDonationEvent.action.DonationAction;
 import dev.gotiger.gTDonationEvent.action.DonationActionRegistry;
 import dev.gotiger.gTDonationEvent.config.DonationConfig;
 import dev.gotiger.gTDonationEvent.config.DonationMapping;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -40,6 +41,8 @@ public class DonationEventListener implements Listener {
             return;
         }
 
-        action.get().execute(event.getPlayer(), event.getAmount());
+        for (Player target : mapping.get().target().resolve(event.getPlayer())) {
+            action.get().execute(target, event.getAmount());
+        }
     }
 }

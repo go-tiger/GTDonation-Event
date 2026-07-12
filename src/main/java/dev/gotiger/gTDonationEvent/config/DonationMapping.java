@@ -1,4 +1,4 @@
 package dev.gotiger.gTDonationEvent.config;
 
-public record DonationMapping(String action) {
+public record DonationMapping(String action, DonationTarget target) {
 }
