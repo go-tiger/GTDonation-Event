@@ -133,15 +133,27 @@ random-animal:
 
 weak-monster:
   radius: 3
-  # 랜덤 소환 후보로 사용할 하급 몬스터 EntityType 목록입니다.
+  # 랜덤 소환 후보로 사용할 하급 몬스터 목록입니다. 대부분 EntityType 이름이며,
+  # CHICKEN_JOCKEY는 좀비(아기)가 닭을 탄 조합을 소환하는 특수 키입니다.
   candidates:
     - ZOMBIE
-    - SKELETON
-    - SPIDER
+    - ZOMBIE_VILLAGER
     - HUSK
     - DROWNED
-    - SILVERFISH
+    - SKELETON
+    - STRAY
+    - CREEPER
+    - SPIDER
     - CAVE_SPIDER
+    - SLIME
+    - MAGMA_CUBE
+    - ENDERMITE
+    - PHANTOM
+    - GHAST
+    - PIGLIN
+    - ZOGLIN
+    - SILVERFISH
+    - CHICKEN_JOCKEY
 
 burn:
   duration-seconds: 5
@@ -237,23 +249,29 @@ medium-monster:
   radius: 4
   # 랜덤 소환 후보로 사용할 중급 몬스터 EntityType 목록입니다.
   candidates:
+    - ENDERMAN
+    - BLAZE
+    - WITCH
+    - BREEZE
+    - BOGGED
+    - HOGLIN
+    - WITHER_SKELETON
     - PILLAGER
     - VINDICATOR
-    - EVOKER
-    - WITCH
-    - STRAY
-    - CREEPER
-    - ENDERMAN
+    - GUARDIAN
+    - PIGLIN_BRUTE
+    - VEX
+    - CREAKING
 
 strong-monster:
   radius: 5
   # 랜덤 소환 후보로 사용할 상급 몬스터 EntityType 목록입니다.
   candidates:
-    - WITHER_SKELETON
+    - EVOKER
     - RAVAGER
-    - BLAZE
+    - SHULKER
+    - ELDER_GUARDIAN
     - WARDEN
-    - PIGLIN_BRUTE
 
 random-item:
   # 랜덤 지급 후보에서 제외할 아이템 목록입니다.

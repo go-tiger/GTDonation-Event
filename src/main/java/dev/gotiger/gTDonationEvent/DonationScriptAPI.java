@@ -652,12 +652,12 @@ public class DonationScriptAPI {
         actionRegistry.get("WEAK_MONSTER").ifPresent(action -> {
             WeakMonsterAction weakMonsterAction = (WeakMonsterAction) action;
             boolean shareResult = shouldShareResultForAll(target);
-            EntityType sharedType = shareResult ? weakMonsterAction.pickRandomEntityType() : null;
+            String sharedKey = shareResult ? weakMonsterAction.pickRandomCandidate() : null;
 
             rouletteManager.resolve(player, target, recipients -> {
                 for (Player recipient : recipients) {
                     boolean spawned = shareResult
-                            ? sharedType != null && weakMonsterAction.spawnMonster(recipient, sharedType) != null
+                            ? sharedKey != null && weakMonsterAction.spawnMonster(recipient, sharedKey) != null
                             : weakMonsterAction.spawnMonster(recipient) != null;
                     if (!spawned) {
                         continue;
