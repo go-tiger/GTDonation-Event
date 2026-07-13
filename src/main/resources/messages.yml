@@ -27,25 +27,25 @@ chat-rush:
   subtitle: "&f채팅으로 좀벌레를 소환하세요! (%count%마리)"
 
 diamond-curse:
-  msg: "&b[후원] &f%donor%&7님에게 다이아의 저주 발동"
+  msg: "&b[후원] &f%donor%&7님이 다이아의 저주 발동"
 
 fan-meeting:
-  msg: "&b[후원] &f%donor%&7님의 팬미팅!"
+  msg: "&b[후원] &f%donor%&7님이 팬미팅 발동"
 
 random-teleport:
   msg: "&b[후원] &f%donor%&7님이 랜덤 순간이동 발동"
 
 mining-curse:
-  msg: "&b[후원] &f%donor%&7님에게 광질 저주 발동"
+  msg: "&b[후원] &f%donor%&7님이 광질 저주 발동"
 
 slot-lock:
-  msg: "&b[후원] &f%donor%&7님의 인벤토리 슬롯 하나가 잠김"
+  msg: "&b[후원] &f%donor%&7님이 인벤토리 슬롯 잠금 발동"
 
 water-prison:
-  msg: "&b[후원] &f%donor%&7님이 물 감옥에 갇힘"
+  msg: "&b[후원] &f%donor%&7님이 물 감옥 발동"
 
 random-scale:
-  msg: "&b[후원] &f%donor%&7님의 크기가 랜덤하게 변경됨"
+  msg: "&b[후원] &f%donor%&7님이 랜덤 크기변경 발동"
 
 frostbite:
   msg: "&b[후원] &f%donor%&7님이 동상 발동"
@@ -54,7 +54,7 @@ monster-scan:
   msg: "&b[후원] &f%donor%&7님이 몬스터 탐지 발동"
 
 diamond-zone:
-  msg: "&b[후원] &f%donor%&7님 주변이 다이아존으로 변했습니다!"
+  msg: "&b[후원] &f%donor%&7님이 다이아존 발동"
 
 inventory-save:
   msg: "&b[후원] &f%donor%&7님이 인벤토리 세이브권 지급"
@@ -67,7 +67,7 @@ soul-out:
 
 enchant-fairy:
   enhanced: "&d강화 요정이 &f%recipient%&d님의 장비를 &6%enchant% %level%&d(으)로 강화했습니다!"
-  appeared: "&b[후원] &f%donor%&7님의 강화 요정이 나타났습니다!"
+  appeared: "&b[후원] &f%donor%&7님이 강화 요정을 소환했습니다."
 
 enchant-scroll:
   msg: "&b[후원] &f%donor%&7님이 즉석 인챈트권 지급"
@@ -83,7 +83,7 @@ totem:
   msg: "&b[후원] &f%donor%&7님이 불사의 토템 지급"
 
 random-debuff:
-  msg: "&b[후원] &f%donor%&7님이 &4%effect%&7 디버프를 받음"
+  msg: "&b[후원] &f%donor%&7님이 &4%effect%&7 디버프 지급"
 
 exp-bottle:
   msg: "&b[후원] &f%donor%&7님이 경험치 병 &e%count%개&7 지급"
@@ -113,7 +113,7 @@ burn:
   msg: "&b[후원] &f%donor%&7님이 화상 발동"
 
 lightning:
-  msg: "&b[후원] &f%donor%&7님에게 벼락 발동"
+  msg: "&b[후원] &f%donor%&7님이 벼락 발동"
 
 tnt:
   msg: "&b[후원] &f%donor%&7님이 TNT를 소환"
@@ -134,13 +134,13 @@ free-fall:
   msg: "&b[후원] &f%donor%&7님이 자유낙하 발동"
 
 rot-food:
-  msg: "&b[후원] &f%donor%&7님의 음식이 모두 썩음"
+  msg: "&b[후원] &f%donor%&7님이 음식 부패 발동"
 
 jump:
   msg: "&b[후원] &f%donor%&7님이 점프 발동"
 
 item-remove:
-  msg: "&b[후원] &f%donor%&7님의 아이템 슬롯 하나가 불타서 사라짐"
+  msg: "&b[후원] &f%donor%&7님이 아이템 슬롯 하나를 불태웠습니다."
 
 random-item:
   msg: "&b[후원] &f%donor%&7님이 랜덤 아이템 &e%item%&7 지급"
